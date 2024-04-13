@@ -1,0 +1,90 @@
+<div [@routerTransition] class="login-page">
+    <div class="row justify-content-md-center">
+        <div class="col-md-4">
+            <img src="./assets/images/logo_strong.png" alt="STRONG logo"
+        class="ms-2" width="300" height="70">
+            <h1 class="mt-5 fw-bolder">Admin Register</h1>
+            <form [formGroup]="submitForm">
+                <div class="form-content">
+                    <div class="form-group">
+                        <input type="text" name="Username" formControlName="Username"
+                            class="form-control input-underline input-lg" placeholder="Your Username">
+                    </div>
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of error_messages.Username">
+                            <div class="error-message" *ngIf="submitForm.get('Username').hasError(error.type) && 
+                                        (submitForm.get('Username').dirty || submitForm.get('Username').touched)">
+                                {{ error.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" name="Email" formControlName="Email"
+                            class="form-control input-underline input-lg" placeholder="Your Email Address"
+                            aria-label="Email" aria-describedby="basic-addon1">
+                        <!-- <input placeholder="Email" class="form-control input-underline input-lg" type="text" /> -->
+                    </div>
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of error_messages.Email">
+                            <div class="error-message" *ngIf="submitForm.get('Email').hasError(error.type) && 
+                        (submitForm.get('Email').dirty || submitForm.get('Email').touched)">
+                                {{ error.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="PhoneNumber" formControlName="PhoneNumber"
+                            class="form-control input-underline input-lg" placeholder="Your Phone Number">
+                        <!-- <input placeholder="Email" class="form-control input-underline input-lg" type="text" /> -->
+                    </div>
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of error_messages.PhoneNumber">
+                            <div class="error-message"
+                                *ngIf="submitForm.get('PhoneNumber').hasError(error.type) && 
+                                            (submitForm.get('PhoneNumber').dirty || submitForm.get('PhoneNumber').touched)">
+                                {{ error.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" name="Password" formControlName="Password" type="password"
+                            class="form-control input-underline input-lg" placeholder="Your Password">
+                        <!-- <input placeholder="Password" class="form-control input-underline input-lg" type="password" /> -->
+                    </div>
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of error_messages.Password">
+                            <div class="error-message"
+                                *ngIf="submitForm.get('Password').hasError(error.type) && (submitForm.get('Password').dirty || submitForm.get('Password').touched)">
+                                {{ error.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="confirmpassword" formControlName="confirmpassword"
+                            class="form-control input-underline input-lg" placeholder="Confirm Password">
+                        <!-- <input placeholder="Repeat Password" class="form-control input-underline input-lg" type="password" /> -->
+                    </div>
+                    <div class="error-messages">
+                        <ng-container *ngFor="let error of error_messages.confirmpassword">
+                            <div class="error-message"
+                                *ngIf="submitForm.get('confirmpassword').hasError(error.type) && (submitForm.get('confirmpassword').dirty || submitForm.get('confirmpassword').touched)">
+                                {{ error.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+                    <!-- <div class="form-group">
+                        <input type="text" name="Username" ngModel #Username="ngModel" required
+                            class="form-control input-underline input-lg" placeholder="Your Username"
+                            aria-label="Username" aria-describedby="basic-addon1">
+                        
+                    </div> -->
+                </div>
+                <button (click)="onSubmit()" [routerLink]="['/dashboard']" class="btn rounded-btn"
+                    [disabled]="!submitForm.valid">Register</button>&nbsp;
+                <button [routerLink]="['/adminLogin']" class="btn rounded-btn">Log in</button>
+            </form>
+        </div>
+    </div>
+</div>

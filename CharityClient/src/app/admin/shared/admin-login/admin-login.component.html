@@ -1,0 +1,42 @@
+<div [@routerTransition] class="login-page">
+    <div class="row justify-content-md-center">
+        <div class="col-md-4">
+            <!-- <img class="user-avatar" src="/assets/images/NotFoundBG.jpg" width="150px" /> -->
+            <img src="./assets/images/logo_strong.png" alt="STRONG logo"
+        class="ms-2" width="300" height="70">
+            <h1 class="mt-5 fw-bolder">Admin Login</h1>
+            <form #loginForm='ngForm' (ngSubmit)="onLogin(loginForm)">
+                <div class="form-content">
+                    <div class="form-group">
+                        <input type="text" name="Username" ngModel #Username="ngModel" required
+                            class="form-control input-underline input-lg" placeholder="Your Username">
+                        <!-- <input placeholder="Email" class="form-control input-underline input-lg" type="text" /> -->
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" name="Password" ngModel #Password="ngModel" required
+                            class="form-control input-underline input-lg" placeholder="Your Password">
+                        <!-- <input placeholder="Password" class="form-control input-underline input-lg" type="password" /> -->
+                    </div>
+                </div>
+                <a (click)="onLogin(loginForm)" [routerLink]="['/admin/']" class="btn rounded-btn">Log in</a>
+                &nbsp;
+                <a [routerLink]="['/adminSignup']" class="btn rounded-btn"> Register</a>
+            </form>
+            <!-- <form role="form">
+                <div class="form-content">
+                    <div class="form-group">
+                        <input placeholder="Email" class="form-control input-underline input-lg" type="text" />
+                    </div>
+
+                    <div class="form-group">
+                        <input placeholder="Password" class="form-control input-underline input-lg" type="password" />
+                    </div>
+                </div>
+                <a (click)="onLoggedin()" [routerLink]="['/admin/']" class="btn rounded-btn">Log in</a>
+                &nbsp;
+                <a [routerLink]="['/adminSignup']" class="btn rounded-btn"> Register</a>
+            </form> -->
+        </div>
+    </div>
+</div>

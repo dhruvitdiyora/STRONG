@@ -1,0 +1,103 @@
+<div class="modal-content form-elegant modal-color">
+  <!--Header-->
+  <div class="modal-header text-center">
+    <h3 class="modal-title w-100 font-weight-bold my-3 ms-4" id="myModalLabel"><strong>Register</strong></h3>
+    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close"
+      (click)="closeRegisterModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+    <!-- <form #registerForm='ngForm' (ngSubmit)="onRegister(registerForm)"> -->
+    <!--Body-->
+    <div class="modal-body mx-4">
+      <!--Body-->
+      <div class="md-form mb-2">
+        <div class="d-flex">
+        <h5 class="me-4 fw-bolder">Sign Up as:</h5>
+        <div class="form-check me-3">
+          <input class="form-check-input" type="radio" name="SignUpAs" id="user" [value]="0" formControlName="SignUpAs">
+          <label class="form-check-label">
+            User
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="SignUpAs" id="org" [value]="1" formControlName="SignUpAs">
+          <label class="form-check-label">
+            Organisation
+          </label>
+        </div>
+      </div>
+
+      </div>
+
+      <div class="md-form mb-2">
+        <div class="input-group">
+          <div class="input-group mb-1"><span class="input-group-text" id="basic-addon1"><i
+                class="fa fa-user register-icons" aria-hidden="true"></i></span>
+            <input type="text" class="form-control shadow-none" formControlName="Username" placeholder="Your Username"
+              aria-label="Username" aria-describedby="basic-addon1">
+          </div>
+          <div *ngIf="Username?.invalid && Username?.touched" class="text-danger">Username is required</div><br>
+        </div>
+      </div>
+
+      <div class="md-form mb-2">
+        <div class="input-group">
+          <div class="input-group mb-1"><span class="input-group-text" id="basic-addon1"><i
+                class="fa fa-envelope register-icons-email" aria-hidden="true"></i></span>
+            <input type="email" class="form-control shadow-none" formControlName="Email" placeholder="Your Email"
+              aria-label="Email" aria-describedby="basic-addon1">
+          </div>
+          <div *ngIf="Email?.invalid && Email?.touched" class="text-danger">Email is required</div><br>
+        </div>
+      </div>
+
+      <div class="md-form mb-2">
+        <div class="input-group">
+          <div class="input-group mb-1"><span class="input-group-text" id="basic-addon1"><i
+                class="fa fa-mobile register-icons-mobile" aria-hidden="true"></i></span>
+            <input type="number" class="form-control shadow-none" formControlName="PhoneNumber" placeholder="Your PhoneNumber"
+              aria-label="mobile" aria-describedby="basic-addon1">
+          </div>
+          <div *ngIf="PhoneNumber?.touched && PhoneNumber?.invalid" class="text-danger">Mobile number is required</div>
+        <div *ngIf="PhoneNumber?.invalid && PhoneNumber?.dirty" class="text-danger">Mobile number must be 10 digit long</div>
+          <br>
+        </div>
+      </div>
+
+      <div class="md-form mb-4">
+        <div class="input-group">
+          <div class="input-group mb-1"><span class="input-group-text" id="basic-addon1"><i
+                class="fa fa-lock register-icons" aria-hidden="true"></i></span>
+            <input type="password" class="form-control shadow-none" formControlName="Password"
+              placeholder="Your Password" aria-label="password" aria-describedby="basic-addon1">
+          </div>
+          <div *ngIf="Password?.invalid && Password?.touched" class="text-danger">Password is required</div><br>
+        </div>
+      </div>
+
+      
+
+      <!-- <div class="d-flex">
+        <div class="input-group me-2 h-25">
+          <div class="input-group mb-3"><input type="number" class="form-control shadow-none" placeholder="Enter OTP" aria-label="otp"
+              aria-describedby="basic-addon1"></div>
+        </div>
+        <div class="text-center mb-5 h-25">
+          <button type="button" class="btn btn-success btn-block btn-rounded z-depth-1a fw-bolder">OTP</button>
+        </div>
+      </div> -->
+
+
+      <div class="md-form mb-3">
+        <div class="text-center mb-3">
+          <button type="submit" class="btn btn-success btn-block rounded-pill z-depth-1a w-50 fw-bolder"
+            [disabled]="!registerForm.valid" >Sign Up</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- (click)="closeRegisterModal()" -->

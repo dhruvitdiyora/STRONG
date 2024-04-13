@@ -1,0 +1,89 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <button type="button" class="btn btn-success btn-xl fw-bolder" (click)="openAddState()">Add State
+                &nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+            <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayAdd}">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 *ngIf="isAdd" class="modal-title pb-2 text-center" id="exampleModalLabel">Add State</h5>
+                            <h5 *ngIf="isEdit" class="modal-title pb-2 text-center" id="exampleModalLabel">Edit State</h5>
+                            <button type="button" class="btn-close" (click)="closeStateModal()"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form [formGroup]="stateDetailForm" class="form p-3 m-3">
+
+                                <div class="container">
+
+                                    <div class="col-sm-12">
+                                        <input id="stateName" class="form-control mt-3" type="text"
+                                            formControlName="stateName" placeholder="Enter State Name">
+                                        <p class="text-danger"
+                                            *ngIf="stateDetailForm.get('stateName')?.hasError('required') &&stateDetailForm.get('stateName')?.touched">
+                                            State Name is Required
+                                        </p>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button *ngIf="isAdd" [disabled]="stateDetailForm.invalid" class="btn btn-success mx-3" (click)="addState()">Add</button>
+                            <button *ngIf="isEdit" [disabled]="stateDetailForm.invalid" class="btn btn-success mx-3" (click)="editState()">Save</button>
+                            <button type="button" class="btn btn-danger" (click)="closeStateModal()">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mt-3">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">StateId</th>
+                        <th scope="col">State Name</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let states of stateList | paginate: { itemsPerPage: count, currentPage: p}">
+                        <th scope="row">{{states.stateId}}</th>
+                        <td>{{states.stateName}}</td>
+                        <td>
+                            <!-- <button type="button" class="btn btn-primary mx-1"><i class="fa fa-eye"
+                                    aria-hidden="true"></i></button> -->
+                            <button type="button" class="btn btn-warning mx-1" (click)="openEditState(states.stateId)" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit State"><i class="fa fa-pencil-square-o"
+                                    aria-hidden="true"></i></button>
+                            <button type="button" class="btn btn-danger mx-1" (click)="openPopup(states.stateId)" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete State"><i
+                                    class="fa fa-trash" aria-hidden="true"></i></button>
+                        </td>
+                        <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <h4 class="pb-2 text-center">Are you sure, You want to delete this?</h4>
+                                        <div class="d-flex justify-content-center mt-4">
+                                            <button class="btn btn-danger mx-3" (click)="deleteState()">Delete</button>
+                                            <button class="btn btn-secondary mx-3"
+                                                (click)="closePopup()">Cancel</button>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" (click)="closePopup()">
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </tr>
+                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

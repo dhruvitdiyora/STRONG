@@ -1,0 +1,105 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <button type="button" class="btn btn-success btn-xl fw-bolder" (click)="openAddCity()">Add City
+                &nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+            <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayAdd}">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 *ngIf="isAdd" class="modal-title pb-2 text-center" id="exampleModalLabel">Add City</h5>
+                            <h5 *ngIf="isEdit" class="modal-title pb-2 text-center" id="exampleModalLabel">Edit City
+                            </h5>
+                            <button type="button" class="btn-close" (click)="closeCityModal()"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form [formGroup]="cityDetailForm" class="form p-3 m-3">
+
+                                <div class="container">
+                                    <div class="row">
+                                        <div class=" col-xl-6 col-sm-12">
+                                            <input id="cityName" class="form-control mt-3" type="text"
+                                                formControlName="cityName" placeholder="Enter City Name">
+                                            <p class="text-danger"
+                                                *ngIf="cityDetailForm.get('cityName')?.hasError('required') &&cityDetailForm.get('cityName')?.touched">
+                                                City Name is Required
+                                            </p>
+                                        </div>
+                                        <div class=" col-xl-6 col-sm-12">
+                                            <select class="form-control mt-3" name="state" id="state"
+                                                 formControlName="stateId" (click)="stateVal()">
+                                                <option *ngFor="let state of states;" [value]="state.stateId">
+                                                    {{state.stateName}}
+                                                </option>
+                                            </select>
+                                            <p class="text-danger" *ngIf="stateDropDown">
+                                                State is required field
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button *ngIf="isAdd" [disabled]="cityDetailForm.invalid" class="btn btn-success mx-3" (click)="addCity()">Add</button>
+                            <button *ngIf="isEdit" [disabled]="cityDetailForm.invalid" class="btn btn-success mx-3" (click)="editCity()">Save</button>
+                            <button type="button" class="btn btn-danger" (click)="closeCityModal()">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mt-3">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">CityId</th>
+                        <th scope="col">City Name</th>
+                        <th scope="col">State Name</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let cities of cityList | paginate: { itemsPerPage: count, currentPage: p}">
+                        <th scope="row">{{cities.cityId}}</th>
+                        <td>{{cities.cityName}}</td>
+                        <td>{{cities.state.stateName}}</td>
+                        <td>
+                            <!-- <button type="button" class="btn btn-primary mx-1"><i class="fa fa-eye"
+                                    aria-hidden="true"></i></button> -->
+                            <button type="button" class="btn btn-warning mx-1" (click)="openEditCity(cities.cityId)" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit City"><i class="fa fa-pencil-square-o"
+                                    aria-hidden="true"></i></button>
+                            <button type="button" class="btn btn-danger mx-1" (click)="openPopup(cities.cityId)" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete City"><i
+                                    class="fa fa-trash" aria-hidden="true"></i></button>
+                        </td>
+                        <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <h4 class="pb-2 text-center">Are you sure, You want to delete this?</h4>
+                                        <div class="d-flex justify-content-center mt-4">
+                                            <button class="btn btn-danger mx-3" (click)="deleteCity()">Delete</button>
+                                            <button class="btn btn-secondary mx-3"
+                                                (click)="closePopup()">Cancel</button>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" (click)="closePopup()">
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </tr>
+                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

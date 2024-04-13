@@ -1,0 +1,15 @@
+.nounderline {
+    text-decoration: none !important;
+  }
+  .modal-dialog {
+    background-color: lightgrey;
+  }
+  
+  .modal-color {
+    background-color: #f0f5ff;
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }

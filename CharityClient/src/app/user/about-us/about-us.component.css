@@ -1,0 +1,44 @@
+.bg-image{
+    color: aliceblue;
+}
+
+.logo{
+    position:absolute; 
+    top: 400px;
+    left: 0;
+    justify-content: center;
+}
+.social-link {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: navy;
+    border-radius: 50%;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+  }
+  
+  .social-link:hover,
+  .social-link:focus {
+    background: #ddd;
+    text-decoration: none;
+    color: lightseagreen;
+  }
+
+  .logos {
+    position: relative;
+    text-align: center;
+    color: white;
+  }
+
+  .centered {
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: rgb(8, 8, 77);
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }

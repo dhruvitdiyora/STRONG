@@ -1,0 +1,16 @@
+.col-xl-6{
+    height: 850px;
+    overflow: auto;
+  }
+.col-xl-3{
+    height: 860px;
+}
+@media (max-width: 575px) {
+  .second{
+    order: 2;
+  } }
+
+  @media (max-width: 1200px) {
+    .second{
+      order: 2;
+    }}

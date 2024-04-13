@@ -1,0 +1,261 @@
+<div class="col-sm-12">
+    <div class="shadow-lg bg-white">
+        <div class="">
+            <div class="media m-0">
+                <div class="d-flex me-3">
+                    <a>
+                        <!-- <img class="img-auto rounded-circle"
+                            src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/4.jpg"
+                            alt="User"> -->
+                        <img class="img-auto rounded-circle" width="100px" src='{{userURL}}' alt="User">
+
+                    </a>
+                    <!-- <a>
+                        <img class="img-auto rounded-circle" src="'{{}}'">
+                    </a> -->
+                </div>
+                <div class="media-body">
+                    <p class="m-0 fw-bolder">{{userName}}</p>
+                    <small><span class="curs" (click)="goToLink(post.longitude,post.latitude)"><i class="fa fa-map-pin"
+                                aria-hidden="true"></i>
+                            {{post.locationName}},{{cityName(post.cityId)}},{{stateName(post.stateId)}}</span></small>
+                    <small><span><i class="fa fa-clock-o" aria-hidden="true"></i> {{post.createdAt | dateAgo
+                            }}</span></small>
+                </div>
+            </div>
+            <!--/ media -->
+        </div>
+        <!--/ cardbox-heading -->
+
+        <div class="cardbox-item">
+            <!-- <img class="img-post" src="./assets/images/blood donation.png" alt="Image"> -->
+            <img class="img-post" src="{{post.imageUrl}}" alt="Image">
+        </div>
+        <!--/ cardbox-item -->
+        <div class="mt-3">
+            <ul class="d-flex mb-3 ps-3 " style="list-style: none;">
+                <li [ngClass]="{'urgent': post.isUrgency}" class=" fs-5 fw-bolder mx-2 curs"
+                    (click)="addUrgency(post.postId)"><i class="fa fa-bolt fa-sm" aria-hidden="true"></i>&nbsp;Urgency
+                </li>
+                <li [ngClass]="{'spamed': post.isSpam}" class=" fs-5 fw-bolder mx-2 curs"
+                    (click)="addSpam(post.postId)"><i class="fa fa-ban fa-sm" aria-hidden="true"></i>&nbsp;Spam</li>
+
+                <li class=" fs-5 fw-bolder mx-2 curs" type="button" (click)="openPopup(post.postId)"><i
+                        class="fa fa-share-alt" aria-hidden="true"></i>&nbsp;Share
+                </li>
+
+                <!-- <button type="button" class="btn btn-link"><span class="pull-right text-muted mx-1 mt-1">{{post.urgencyCount}} urgency</span></button>
+                <button type="button" class="btn btn-link"><span class="pull-right text-muted mx-1 mt-1">{{post.spamCount}} spam</span></button>
+                <button type="button" class="btn btn-link"><span class="pull-right text-muted mx-1 mt-1">{{post.spamCount}} spam</span></button> -->
+
+                <span class="pull-right text-muted mx-1 mt-1 curs"
+                    (click)="openUrgency(post.postId,post.urgency.length)">
+                    {{post.urgency.length}}
+                    urgency</span>
+                <span class="pull-right text-muted mx-1 mt-1 curs"
+                    (click)="openSpam(post.postId,post.spam.length)">{{post.spam.length}}
+                    spam</span>
+                <span class="pull-right text-muted mx-1 mt-1 curs"
+                    (click)="openComment(post.postId,post.postComments.length)">{{post.postComments.length}}
+                    comments</span>
+                <li *ngIf="!save" (click)="addBookmark(post.postId)" class=" fs-5 fw-bolder ms-auto me-3 curs"><i
+                        class="fa fa-bookmark-o" aria-hidden="true"></i>&nbsp;Save
+                </li>
+                <li *ngIf="save" (click)="addBookmark(post.postId)" class=" fs-5 fw-bolder ms-auto me-3 curs"><i
+                        class="fa fa-bookmark" aria-hidden="true"></i>&nbsp;Saved
+                </li>
+            </ul>
+            <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':urgencyDisplay}">
+                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="modal-header">
+                                <h4>Urgency</h4>
+                                <button type="button" class="btn-close" (click)="closeUrgency()"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="row mt-2" *ngFor="let urgency of allUrgency">
+                                <div class="d-flex flex-row align-items-center col-md-1"> <img
+                                        src="{{userurl}}/{{urgency.user.userId}}/{{urgency.user.profileImage}}"
+                                        width="50" class="comment-logo img-auto rounded-circle mt-1">
+                                    <div class="d-flex flex-column col-md-8">
+                                        <h6 class="name px-2">{{urgency.user.userName}}</h6>
+                                    </div>
+                                </div>
+                                <!-- <div class="row">
+                                    <p class="lead">{{urgency.createdBy}}</p>
+                                </div> -->
+
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" (click)="closeUrgency()">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <h4 class="pb-2">Share this link via</h4>
+                            <div class="d-flex align-items-center icons">
+                                <a
+                                    class="fs-5 d-flex mx-2 px-2 py-2 border border-1 rounded-circle border-info share-logo"><i
+                                        class="fa fa-facebook-square fa-lg" aria-hidden="true"></i></a>
+
+                                <a
+                                    class="fs-5 d-flex mx-2 px-2 py-2 border border-1 rounded-circle border-info share-logo "><i
+                                        class="fa fa-twitter-square fa-lg" aria-hidden="true"></i></a>
+
+                                <a
+                                    class="fs-5 d-flex mx-2 px-2 py-2 border border-1 rounded-circle border-info share-logo instagram-logo"><i
+                                        class="fa fa-instagram fa-lg" aria-hidden="true"></i></a>
+
+                                <a
+                                    class="fs-5 d-flex mx-2 px-2 py-2 border border-1 rounded-circle border-info share-logo whatsapp-logo"><i
+                                        class="fa fa-whatsapp fa-lg" aria-hidden="true"></i></a>
+
+                                <a
+                                    class="fs-5 d-flex mx-2 px-2 py-2 border border-1 rounded-circle border-info share-logo"><i
+                                        class="fa fa-telegram fa-lg" aria-hidden="true"></i></a>
+                            </div>
+                            <h5 class="pt-2 mt-3">Or copy link</h5>
+                            <div class="field d-flex">
+                                <!-- <a class="fs-5 d-flex mx-2 px-2 py-2"
+                                                style="text-decoration: none;">
+                                                <i class="fa fa-link fa-lg" aria-hidden="true"></i></a>  -->
+                                <input type="text" id="sharepost" class="form-control" value="some.com/share" disabled>
+                                <button class="btn btn-success ms-2"><i class="fa fa-clone fa-lg" aria-hidden="true"
+                                        ngbTooltip="Copy link to Clickboard" (click)="copyToClip()"></i></button>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" (click)="closePopup()">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':cmntDisplay}">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header cmnt-header mt-1">
+                            <h2 class="pb-2">Comments</h2>
+                            <button type="button" class="btn-close" (click)="closeComment()"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body modal-body-cmnt">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-12 pb-4">
+                                        <div class="row mt-2" *ngFor="let cmnt of postCmnt">
+                                            <div class="d-flex flex-row align-items-center col-md-1"> <img
+                                                    src="{{cmnt.user.profileImage}}" width="50"
+                                                    class="comment-logo img-auto rounded-circle mt-1">
+                                                <div class="row">
+                                                    <h6 class="name mx-3">{{cmnt.user.userName}}</h6>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <p class="lead">{{cmnt.comment}}</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" (click)="closeComment()">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':spamDisplay}">
+                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="modal-header">
+                                <h4 class="pb-2">Spam</h4>
+                                <button type="button" class="btn-close" (click)="closeSpam()"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="row mt-3" *ngFor="let spam of allSpam">
+                                <div class="d-flex flex-row align-items-center col-md-1"> <img
+                                        src="{{spam.user.profileImage}}" width="50"
+                                        class="comment-logo img-auto rounded-circle mt-1">
+                                    <div class="row">
+                                        <h6 class="name mx-3">{{spam.user.userName}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" (click)="closeSpam()">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex align-items-center my-3">
+            <div class="fs-6 fw-bolder ms-4 ">Location:&nbsp;</div>
+            <div class="form-control d-flex mx-2 locate-content">
+                <input type="text" class="locate form-control shadow-none border-0" value="{{post.locationName}}"
+                    disabled>
+                <!-- <span>{{post.locationName}}</span> -->
+                <button type="submit" class="btn btn-primary btn-sm" (click)="goToLink(post.longitude,post.latitude)"><i
+                        class="fa fa-map-pin fa-sm" aria-hidden="true"></i></button>
+            </div>
+
+            <!-- <input type="text" class="form-control shadow-none locate-content me-2" value="location" disabled>
+                <button type="button" class="btn btn-primary btn-sm mx-2 ">Locate me&nbsp;<i class="fa fa-map-pin"
+                        aria-hidden="true"></i></button> -->
+        </div>
+
+        <div class="d-flex align-items-center my-3">
+
+
+            <div class="fs-6 fw-bolder ms-4 ">Requirement Type:&nbsp;</div>
+            <input type="text" class="form-control shadow-none   req-content"
+                value="{{reqTypeName(post.requirementTypeId)}}" disabled>
+
+            <div class="fs-6 fw-bolder ms-3 ">Requirement Count:&nbsp;</div>
+            <input type="number" class="form-control shadow-none  req-content" value="{{post.helpRequiredCount}}"
+                disabled>
+        </div>
+
+        <div class="mx-4 my-3">
+            <div class="fw-bolder fs-6">Post Description:&nbsp;</div>
+            <p>{{post.postDescription}}</p>
+        </div>
+
+        <div class="text-center pb-3">
+            <button class="btn btn-success mx-auto rounded-pill btn-block fw-bolder"
+                [routerLink]="['/post',post.postId]" routerLinkActive="active"><i class="fa fa-eye"
+                    aria-hidden="true"></i>
+                View Post
+            </button>
+        </div>
+
+        <div class="d-flex me-3 media">
+            <a><img class="comment-logo img-auto rounded-circle" src="{{userURL}}" alt="User"></a>
+            <div class="form-control d-flex ms-2">
+                <input [(ngModel)]="comment" type="text" class="form-control shadow-none me-2 border-0 p-0"
+                    placeholder="write a commment">
+                <button [disabled]="!comment" type="submit" class="btn btn-success btn-sm"
+                    (click)="addComment(post.postId)"><i class="fa fa-paper-plane " aria-hidden="true"></i></button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+<div *ngFor="let post of posts">
+    <app-post [post]=post class="posts" (getPostToChild)="getPosts()"></app-post>
+</div>
+<div *ngIf="postButtonShow">
+    <button type="button" class="btn btn-success btn-circle btn-xl position-fixed mx-2" (click)="openCreateForm()" data-bs-toggle="tooltip" data-bs-placement="top" title="Create Post"><i
+            class="fa fa-plus" aria-hidden="true"></i>
+    </button>
+</div>

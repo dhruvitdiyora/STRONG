@@ -1,0 +1,51 @@
+<div class="row mx-3">
+    <div class="col-xl-12">
+        <div class="d-flex ms-3">
+            <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>
+            <h4 class="ms-2 fw-bolder">Info</h4>
+        </div>
+    </div>
+</div>
+<div class="row mt-2 ps-1 mx-3">
+    <div class="col-xl-12">
+        <div class="d-flex ms-3">
+            <div><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i></div>
+            <div class="mb-1 ms-3"><b>Address:&nbsp;</b>
+                <a>{{orgList.organisationAddress}}</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-2 ps-1 mx-3">
+    <div class="col-xl-12">
+        <div class="d-flex  ms-3">
+            <i class="fa fa-phone-square fa-lg" aria-hidden="true"></i>
+            <div class="mb-1 ms-2"><b>Contact:&nbsp;</b>
+                <a>+91 {{orgList.organisationContactNo}}</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="orgList.organisatioWebUrl" class="row mt-2 ps-1 mx-3">
+    <div class="col-12">
+        <div *ngIf="orgList.organisatioWebUrl" class="d-flex ms-3">
+            <i class="fa fa-globe fa-lg" aria-hidden="true"></i>
+            <p class="mb-1 ms-2"><b>Website:&nbsp;</b></p>
+        </div>
+        <div class="ms-3">
+            <a class="org-webLink" href="{{orgList.organisatioWebUrl}}">{{orgList.organisatioWebUrl}}</a>
+        </div>
+        
+    </div>
+</div>
+
+<div class="row mt-2 ps-1 mx-3">
+    <div class="col-12">
+        <div class="d-flex ms-3">
+            <i class="fa fa-group fa-md" aria-hidden="true"></i>
+            <div class="mb-1 ms-2"><b>Volunteers:&nbsp;</b>
+                <a>{{totalVolunteers}}</a>
+            </div>
+        </div>
+    </div>
+</div>

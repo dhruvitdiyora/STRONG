@@ -1,0 +1,33 @@
+<div class="navbar-expand-lg">
+    <div class="row">
+        <div class="col-6 bg-dark">
+            <div class="text-center">
+                <button class="navbar-toggler bg-secondary my-1" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#org-left-toggler" aria-expanded="false" aria-label="Toggle navigation"
+                    (click)="isCollapsedLeft = !isCollapsedLeft" [attr.aria-expanded]="!isCollapsedLeft"
+                    aria-controls="org-left-toggler">
+                    <span><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i></span>
+                </button>
+            </div>
+        </div>
+        <div class="col-6 bg-dark">
+            <div class="text-center">
+                <button class="navbar-toggler  bg-secondary my-1" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#org-right-toggler" aria-expanded="false" aria-label="Toggle navigation"
+                    (click)="isCollapsedRight = !isCollapsedRight" [attr.aria-expanded]="!isCollapsedRight"
+                    aria-controls="org-right-toggler">
+                    <span><i class="fa fa-calendar fa-lg" aria-hidden="true"></i></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div>
+    <div class="row">
+        <app-org-leftbar class="col-xl-2 bg-dark text-light org-about" id="org-left-toggler" [ngbCollapse]="isCollapsedLeft"></app-org-leftbar>
+        <app-org-info class="col-xl-8 order-sm-2 order-md-2 order-lg-2 second">
+        </app-org-info>
+        <app-rightbar class="col-xl-2 bg-dark text-light pt-3 order-lg-3" id="org-right-toggler" [ngbCollapse]="isCollapsedRight"></app-rightbar>
+    </div>
+    </div>
+</div>

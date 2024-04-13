@@ -1,0 +1,147 @@
+<div class="container">
+
+    <!-- Modal -->
+    <div class="modal" id="myModal" [ngStyle]="{'display':formDisplay}">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content modal-color">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create Event</h5>
+                    <button type="button" class="btn-close" (click)="closeForm()"></button>
+                </div>
+                <div class="modal-body mx-4">
+                    <form [formGroup]="createEventForm">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+                                        <img [src]="imageURL" [alt]="createEventForm.value.name" height="200px"
+                                            class="form-control mt-3">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <!-- <label class="form-label" for="postDescription">Post Description</label><br> -->
+                                    <input id="eventName" class="form-control mt-3" type="text"
+                                        formControlName="eventName" placeholder="eventName">
+                                    <p class="text-danger"
+                                        *ngIf="createEventForm.get('eventName')?.hasError('required') &&createEventForm.get('eventName')?.touched">
+                                        EventName is Required Field
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-sm-12">
+                                    <textarea name="eventDescription" id="eventDescription" cols="30" rows="3"
+                                        class="form-control " formControlName="eventDescription"
+                                        placeholder="eventDescription"></textarea>
+                                    <p class="text-danger"
+                                        *ngIf="createEventForm.get('eventDescription')?.hasError('required') &&createEventForm.get('eventDescription')?.touched">
+                                        EventDescription is Required Field
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- date mate onfocus="(this.type='EventStartDate')" -->
+                            <div class="row mt-3">
+                                <div class="col-sm-6">
+                                    <label class="form-label" for="eventStartDate">EventStartDate</label>
+                                    <input type="datetime-local" name="eventStartDate" id="eventStartDate" class="form-control"
+                                        formControlName="eventStartDate" placeholder="Enter Event StartDate">
+                                    <p class="text-danger"
+                                        *ngIf="createEventForm.get('eventStartDate')?.hasError('required') &&createEventForm.get('eventStartDate')?.touched">
+                                        EventStartDate is Required Field
+                                    </p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="form-label" for="eventEndDate">EventEndDate</label>
+                                    <input type="datetime-local" name="eventEndDate" id="eventEndDate" class="form-control"
+                                        formControlName="eventEndDate" placeholder="eventEndDate">
+                                    <p class="text-danger"
+                                        *ngIf="createEventForm.get('eventEndDate')?.hasError('required') &&createEventForm.get('eventEndDate')?.touched">
+                                        EventEndDate is Required Field
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <!-- <label class="form-label" for="requirementType">Requirement type</label><br> -->
+                                    <input type="text" name="eventType" id="eventType" class="form-control mt-3"
+                                        formControlName="eventType" placeholder="eventType">
+                                    <p class="text-danger"
+                                        *ngIf="createEventForm.get('eventType')?.hasError('required') &&createEventForm.get('eventType')?.touched">
+                                        Event type is required field
+                                    </p>
+                                </div>
+                                <div class="col-sm-4">
+                                    <!-- <label class="form-label" for="Pincode">Pincode</label><br> -->
+                                    <input id="pincod" class="form-control mt-3" type="number" formControlName="pincod"
+                                        placeholder="pincode" (change)="checkPincode($event)">
+                                    <p>
+                                        <span class=" text-danger"
+                                            *ngIf="createEventForm.get('pincod')?.hasError('required') && createEventForm.get('pincod')?.touched">
+                                            Pincode is required
+                                        </span>
+                                        <span class=" text-danger"
+                                            *ngIf="(createEventForm.get('pincod')?.hasError('required') ||createEventForm.get('pincod')?.hasError('notavail') )&&(createEventForm.get('pincod')?.touched|| createEventForm.get('pincod').dirty)">
+                                            Enter Valid Pincode
+                                        </span>
+                                        <span class=" text-danger"
+                                            *ngIf="createEventForm.get('pincod')?.hasError('minlength') ||createEventForm.get('pincod')?.hasError('notavail') &&createEventForm.get('pincod')?.touched">
+                                            enter 6 digit
+                                        </span>
+                                        <span class=" text-danger"
+                                            *ngIf="createEventForm.get('eventOrganizerId')?.hasError('required') &&createEventForm.get('eventOrganizerId')?.touched">
+                                            Pincode is required. Enter Valid pincode
+                                        </span>
+                                        <span class="text-success" *ngIf="pinVal">
+                                            your pincode is valid
+                                        </span>
+                                    </p>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <button class="btn btn-primary mt-3" (click)="checkPincode($event)">Check</button>
+                                    <!-- <input type="button" id="pincodeId" class="form-control mt-3" readonly
+                                        formControlName="pincodeId" value="check"> -->
+                                    <!-- <p class=" text-danger"
+                                        *ngIf="postCreateForm.get('pincodeId')?.hasError('required') &&postCreateForm.get('pincod')?.touched">
+                                        Pincode is required. Enter Valid pincode
+                                    </p> -->
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <!-- <label class="form-label" for="Location">Location Name</label><br>  -->
+                                    <input id="locationName" class="form-control mt-3" type="text"
+                                        formControlName="locationName" placeholder=" Event Location">
+                                    <p class="text-danger"
+                                        *ngIf="createEventForm.get('locationName')?.hasError('required') &&createEventForm.get('locationName')?.touched">
+                                        Event Location is required
+                                    </p>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <input type="file" name="files" accept="image/*" class="form-control mt-3"
+                                        formControlName="eventBanner" (change)="showPreview($event)">
+                                    <p class="text-danger"
+                                        *ngIf="createEventForm.get('eventBanner')?.hasError('required') &&createEventForm.get('eventBanner')?.touched">
+                                        Image is required
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="closeForm()">Close</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="createEventForm.invalid"
+                        (click)="saveEvent()" routerLinkActive="active">Post</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

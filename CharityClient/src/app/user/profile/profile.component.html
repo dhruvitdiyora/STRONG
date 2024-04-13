@@ -1,0 +1,301 @@
+<div class="main-content">
+
+    <!-- Header -->
+    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+        style="height: 300px; background-image: url; background-size: cover; background-position: center top;">
+        <!-- Mask -->
+        <span class="mask bg-gradient-default opacity-8"></span>
+        <!-- Header container -->
+        <div class="container-fluid d-flex align-items-center">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="display-2 text-white">Hello {{userData.userName}}</h1>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Page content -->
+    <div class="container-fluid mt--7">
+        <div class="row">
+            <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+                <div class="card card-profile shadow">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-3 order-lg-2">
+                            <div class="card-profile-image">
+                                <a href="#">
+                                    <img *ngIf="userCheck" src="{{userData.userData.profileImage}}"
+                                        class="user-logo rounded-circle ms-3">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                    </div>
+                    <div class="card-body pt-0 pt-md-4">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                                    <div>
+                                        <span *ngIf="userCheck"
+                                            class="heading">{{userData.userData.totalPostCount}}</span>
+                                        <span *ngIf="!userCheck" class="heading">0</span>
+                                        <span class="description">Postcount</span>
+                                    </div>
+                                    <div>
+                                        <span class="heading">10</span>
+                                        <span class="description">Photos</span>
+                                    </div>
+                                    <div>
+                                        <span class="heading">89</span>
+                                        <span class="description">Comments</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <h1 *ngIf="userCheck">
+                                {{userData.userData.firstName}} {{userData.userData.lastName}}
+                            </h1>
+                            <div class="h5 mt-4">
+                                <i class="ni business_briefcase-24 mr-2"></i> Email:
+                                {{userData.emailAddress}}
+                            </div>
+                            <div class="h5 mt-4">
+                                <i class="ni business_briefcase-24 mr-2"></i> Mobile:
+                                {{userData.mobileNo}}
+                            </div>
+                            <hr class="my-4">
+                            <p *ngIf="userCheck">{{userData.userData.userDescription}}</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-8 order-xl-1">
+                <div class="card bg-secondary shadow">
+                    <div class="card-header bg-white border-0">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h3 class="mb-0">My account</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <tabset #staticTabs>
+
+
+                            <tab heading="My Posts">
+                                <div class="card-body">
+                                    <div *ngIf="userCheck">
+                                        <div *ngFor="let post of posts">
+                                            <app-profilepost [post]=post></app-profilepost>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="!userCheck">
+                                        <app-no-data></app-no-data>
+
+                                    </div>
+                                    <!-- <div *ngFor="let post of posts">
+                                        <app-user-post [post]=post [userURL]=posts.profileImage [userName]="posts.userName"></app-user-post>
+                                    </div> -->
+                                </div>
+                            </tab>
+                            <tab heading="Edit Profile">
+
+                                <form [formGroup]="userDetailForm">
+                                    <h6 class="heading-small text-muted mb-4">User information</h6>
+                                    <div class="pl-lg-4">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group focused">
+                                                    <label class="form-control-label"
+                                                        for="input-username">Username</label>
+                                                    <input type="text" id="input-username"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="Username" value="lucky.jesse"
+                                                        formControlName="userName" readonly>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-email">Email
+                                                        address</label>
+                                                    <input type="email" id="input-email"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="jesse@example.com" formControlName="emailAddress"
+                                                        readonly>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group focused">
+                                                    <label class="form-control-label" for="input-first-name">First
+                                                        name</label>
+                                                    <input type="text" id="input-first-name"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="First name" formControlName="firstName">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group focused">
+                                                    <label class="form-control-label" for="input-last-name">Last
+                                                        name</label>
+                                                    <input type="text" id="input-last-name"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="Last name" formControlName="lastName">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group focused">
+                                                    <label class="form-control-label"
+                                                        for="input-last-name">Mobile</label>
+                                                    <input type="text" id="input-last-name"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="Mobile" formControlName="mobileNo" readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <button class="btn btn-primary mt-4 mx-auto" *ngIf="show"
+                                                    (click)="change()">
+                                                    Edit profileImage
+                                                </button>
+                                                <div class="form-group focused" *ngIf="hide">
+                                                    <label class="form-control-label"
+                                                        for="input-last-name">image</label>
+                                                    <input type="file" name="files" accept="image/*"
+                                                        class="form-control" formControlName="profileImage"
+                                                        (change)="setImage($event)">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group focused">
+                                                    <label class="form-control-label"
+                                                        for="input-last-name">Gender</label> : &nbsp;&nbsp;&nbsp;
+                                                    <label class="form-control-label">
+                                                        <input type="radio" value="Male" formControlName="gender">
+                                                        <span>Male</span>
+                                                    </label>&nbsp;&nbsp;&nbsp;
+                                                    <label class="form-control-label">
+                                                        <input type="radio" value="Female" formControlName="gender">
+                                                        <span>Female</span>&nbsp;&nbsp;&nbsp;
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="my-4">
+                                    <!-- Address -->
+                                    <h6 class="heading-small text-muted mb-4">Contact information</h6>
+                                    <div class="pl-lg-4">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group focused">
+                                                    <label class="form-control-label" for="input-city">City</label>
+                                                    <select class="form-control" name="cityId" id="cityId"
+                                                        formControlName="cityId">
+                                                        <option *ngFor="let city of cities;" [value]="city.cityId">
+                                                            {{city.cityName}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group focused">
+                                                    <label class="form-control-label" for="input-country">State</label>
+                                                    <select class="form-control" name="stateId" id="stateId"
+                                                        formControlName="stateId">
+                                                        <option *ngFor="let state of states;" [value]="state.stateId">
+                                                            {{state.stateName}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-country">
+                                                        Pincode</label>
+                                                    <input type="number" id="input-postal-code"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="Pincode" formControlName="pincode1"
+                                                        (change)="checkPincode($event)">
+                                                    <p>
+                                                        <span class=" text-danger"
+                                                            *ngIf="userDetailForm.get('pincod')?.hasError('required') && userDetailForm.get('pincod')?.touched">
+                                                            Pincode is required
+                                                        </span>
+                                                        <span class=" text-danger"
+                                                            *ngIf="(userDetailForm.get('pincod')?.hasError('required') ||userDetailForm.get('pincod')?.hasError('notavail') )&&(userDetailForm.get('pincod')?.touched|| userDetailForm.get('pincod').dirty)">
+                                                            Enter Valid Pincode
+                                                        </span>
+                                                        <span class=" text-danger"
+                                                            *ngIf="userDetailForm.get('pincod')?.hasError('minlength') ||userDetailForm.get('pincod')?.hasError('notavail') &&userDetailForm.get('pincod')?.touched">
+                                                            enter 6 digit
+                                                        </span>
+                                                        <span class=" text-danger"
+                                                            *ngIf="userDetailForm.get('pincodeId')?.hasError('required') &&userDetailForm.get('pincod')?.touched">
+                                                            Pincode is required. Enter Valid pincode
+                                                        </span>
+                                                        <span class="text-success" *ngIf="pinVal">
+                                                            your pincode is valid
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="my-4">
+                                    <!-- Description -->
+                                    <h6 class="heading-small text-muted mb-4">About me</h6>
+                                    <div class="pl-lg-4">
+                                        <div class="form-group focused">
+                                            <label>About Me</label>
+                                            <textarea rows="4" class="form-control form-control-alternative"
+                                                formControlName="userDescription"></textarea>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="row align-items-center">
+                                    <div class="col-8">
+
+                                    </div>
+                                    <div class="col-4 text-right">
+                                        <button class="btn btn-info" (click)="editUser()">Save changes</button>
+                                    </div>
+                                </div>
+
+                            </tab>
+
+
+                        </tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+<!-- <footer class="footer">
+    <div class="row align-items-center justify-content-xl-between">
+        <div class="col-xl-6 m-auto text-center">
+            <div class="copyright">
+                <p>Made with <a href="https://www.creative-tim.com/product/argon-dashboard" target="_blank">Argon
+                        Dashboard</a> by Creative Tim</p>
+            </div>
+        </div>
+    </div>
+</footer> -->

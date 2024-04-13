@@ -1,0 +1,129 @@
+<nav [ngClass]="{ sidebarPushRight: isActive, collapsed: collapsed }" class="sidebar">
+    <div class="list-group">
+        <!-- <a [routerLinkActive]="['router-link-active']" class="list-group-item" routerLink="/dashboard">
+            <i class="fa fa-fw fa-dashboard"></i>&nbsp;
+            <span>Dashboard</span>
+        </a> -->
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['./verified-posts']" class="list-group-item">
+            <i class="fa fa-file" aria-hidden="true"></i>&nbsp;
+            <span>Posts</span>
+        </a>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['./unverified-posts']" class="list-group-item">
+            <i class="fa fa-file-o" aria-hidden="true"></i>&nbsp;
+            <span>Posts To Verify</span>
+        </a>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['./states']" class="list-group-item">
+            <i class="fa fa-home" aria-hidden="true"></i>&nbsp;
+            <span>State</span>
+        </a>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['./city']" class="list-group-item">
+            <i class="fa fa-home" aria-hidden="true"></i>&nbsp;
+            <span>City</span>
+        </a>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['./pincode']" class="list-group-item">
+            <i class="fa fa-home" aria-hidden="true"></i>&nbsp;
+            <span>Pincode</span>
+        </a>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['./clusters']" class="list-group-item">
+            <i class="fa fa-globe" aria-hidden="true"></i>&nbsp;
+            <span>Clusters</span>
+        </a>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['./requirement-type']" class="list-group-item">
+            <i class="fa fa-gratipay" aria-hidden="true"></i>&nbsp;
+            <span>Requirement Type</span>
+        </a>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['./users']" class="list-group-item">
+            <i class="fa fa-user" aria-hidden="true"></i>&nbsp;
+            <span>Users</span>
+        </a>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['./organisations']" class="list-group-item">
+            <i class="fa fa-building" aria-hidden="true"></i>&nbsp;
+            <span>Organisations</span>
+        </a>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['./unverified-orgs']" class="list-group-item">
+            <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;
+            <span>Organisations To Verify</span>
+        </a>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['./events']" class="list-group-item">
+            <i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;
+            <span>Events</span>
+        </a>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['./event-post']" class="list-group-item">
+            <i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;
+            <span>Event Post</span>
+        </a>
+        <!-- <div class="nested-menu">
+            <a (click)="addExpandClass('pages')" class="list-group-item">
+                <i class="fa fa-plus"></i>&nbsp;
+                <span>{{ 'Menu'}}</span>
+            </a>
+            <li [class.expand]="showMenu === 'pages'" class="nested">
+                <ul class="submenu">
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="fa fa-monument"></i>&nbsp;
+                            <span>{{ 'Submenu' }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="fa fa-monument"></i>&nbsp;
+                            <span>{{ 'Submenu'}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="fa fa-monument"></i>&nbsp;
+                            <span>{{ 'Submenu'}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </div>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/blank-page']" class="list-group-item">
+            <i class="fa fa-file-o"></i>&nbsp;
+            <span>{{ 'Blank Page' }}</span>
+        </a> -->
+
+
+        <div class="header-fields">
+            <a (click)="rltAndLtr()" class="list-group-item">
+                <span><i class="fa fa-arrows-h"></i>&nbsp; RTL/LTR</span>
+            </a>
+
+            <div class="nested-menu">
+                <a (click)="addExpandClass('profile')" class="list-group-item">
+                    <span><i class="fa fa-user"></i>&nbsp; John Smith</span>
+                </a>
+                <li [class.expand]="showMenu === 'profile'" class="nested">
+                    <ul class="submenu">
+                        <li>
+                            <a href="javascript:void(0)">
+                                <span><i class="fa fa-fw fa-user"></i> Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <span><i class="fa fa-fw fa-envelope"></i> Inbox</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <span><i class="fa fa-fw fa-gear"></i> Settings</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a (click)="onLoggedout()" [routerLink]="['/login']">
+                                <span><i class="fa fa-fw fa-power-off"></i> Log Out</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </div>
+        </div>
+    </div>
+    <div (click)="toggleCollapsed()" [ngClass]="{ collapsed: collapsed }" class="toggle-button">
+        <i class="fa fa-fw fa-angle-double-{{collapsed ? 'right' : 'left' }}"></i>&nbsp;
+        <span>Collapse Sidebar</span>
+    </div>
+</nav>

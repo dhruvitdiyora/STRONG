@@ -1,0 +1,137 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <button type="button" class="btn btn-success btn-xl fw-bolder" (click)="openAddCluster()">Add ClusterLocation
+                &nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+            <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayAdd}">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 *ngIf="isAdd" class="modal-title pb-2 text-center" id="exampleModalLabel">Add Cluster Location</h5>
+                            <h5 *ngIf="isEdit" class="modal-title pb-2 text-center" id="exampleModalLabel">Edit ClusterLocation
+                            </h5>
+                            <button type="button" class="btn-close" (click)="closeClusterModal()"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form [formGroup]="clusterDetailForm" class="form p-3 m-3">
+
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-xl-6 col-sm-4">
+                                            <input id="postId" class="form-control mt-3" type="number" formControlName="postId"
+                                                placeholder="Enter PostId" (change)="checkPost($event)">
+                                            <p>
+                                                <span class=" text-danger"
+                                                    *ngIf="clusterDetailForm.get('postId')?.hasError('required') && clusterDetailForm.get('postId')?.touched">
+                                                    PostId is required
+                                                </span>
+                                                <span class=" text-danger"
+                                                    *ngIf="(clusterDetailForm.get('postId')?.hasError('required') ||clusterDetailForm.get('postId')?.hasError('notavail') )&&(clusterDetailForm.get('postId')?.touched|| clusterDetailForm.get('postId').dirty)">
+                                                    Enter Valid PostId
+                                                </span>
+                                                <span class=" text-danger"
+                                                *ngIf="clusterDetailForm.get('postId')?.hasError('required') &&clusterDetailForm.get('postId')?.touched">
+                                                Pincode is required. Enter Valid pincode
+                                            </span>
+                                            <span class="text-success" *ngIf="postVal">
+                                                your PostID is valid
+                                            </span>
+                                            </p>
+                                        </div>
+                                        <div class="col-xl-6 col-sm-2">
+                                            <button class="btn btn-primary mt-3" (click)="checkPost($event)">Check Post</button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class=" col-xl-6 col-sm-12">
+                                            <input id="locations" class="form-control mt-3" type="text"
+                                                formControlName="clusterDetails" placeholder="Enter Location" readonly>
+                                            <p class="text-danger"
+                                                *ngIf="clusterDetailForm.get('locations')?.hasError('required') &&clusterDetailForm.get('locations')?.touched">
+                                                Locations is Required
+                                            </p>
+                                        </div>
+                                        <div *ngIf="isAdd" class=" col-xl-6 col-sm-12">
+                                            <input id="peopleCount" class="form-control mt-3" type="text"
+                                                formControlName="peopleCount" placeholder="Enter PeopleCount" value="clusterDetailForm.value.peopleCount" readonly>
+                                            <p class="text-danger"
+                                                *ngIf="clusterDetailForm.get('peopleCount')?.hasError('required') &&clusterDetailForm.get('peopleCount')?.touched">
+                                                People Count is Required
+                                            </p>
+                                        </div>
+                                        <div *ngIf="isEdit" class=" col-xl-6 col-sm-12">
+                                            <input id="peopleCount" class="form-control mt-3" type="text"
+                                                formControlName="peopleCount" placeholder="Enter PeopleCount" value="clusterDetailForm.value.peopleCount">
+                                            <p class="text-danger"
+                                                *ngIf="clusterDetailForm.get('peopleCount')?.hasError('required') &&clusterDetailForm.get('peopleCount')?.touched">
+                                                People Count is Required
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button *ngIf="isAdd" [disabled]="clusterDetailForm.invalid" class="btn btn-success mx-3" (click)="addCluster()">Add</button>
+                            <button *ngIf="isEdit" [disabled]="clusterDetailForm.invalid" class="btn btn-success mx-3"  (click)="editCluster()">Save</button>
+                            <button type="button" class="btn btn-danger" (click)="closeClusterModal()">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mt-3">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">ClusterId</th>
+                        <th scope="col">Locations</th>
+                        <th scope="col">Requirement Type</th>
+                        <th scope="col">People Count</th>
+                        <th scope="col">City</th>
+                        <th scope="col">Created By</th>
+                        <th scope="col">PostId</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let clusters of clusterList">
+                        <th scope="row">{{clusters.clusterLocationId}}</th>
+                        <td>{{clusters.clusterDetails}}</td>
+                        <td>{{clusters.requirementType.requirementTypeName}}</td>
+                        <td>{{clusters.peopleCount}}</td>
+                        <td>{{clusters.city.cityName}}</td>
+                        <td>{{clusters.createdBy}}</td>
+                        <td>{{clusters.post.postId}}</td>
+                        <td>
+                            <!-- <button type="button" class="btn btn-primary mx-1"><i class="fa fa-eye" aria-hidden="true"></i></button> -->
+                            <button type="button" class="btn btn-warning mx-1" (click)="openEditCluster(clusters.clusterLocationId)" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Cluster Location"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                            <button type="button" class="btn btn-danger mx-1" (click)="openPopup(clusters.clusterLocationId)" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Cluster Location"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        </td>
+                        <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <h4 class="pb-2 text-center">Are you sure, You want to delete this?</h4>
+                                        <div class="d-flex justify-content-center mt-4">
+                                            <button class="btn btn-danger mx-3" (click)="deleteCluster()">Delete</button>
+                                            <button class="btn btn-secondary mx-3" (click)="closePopup()">Cancel</button>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" (click)="closePopup()">
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

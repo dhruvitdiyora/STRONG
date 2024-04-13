@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">UserId</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">EmailAddress</th>
+                        <th scope="col">Mobile Number</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Pincode</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let users of usersList">
+                        <th scope="row">{{users.userId}}</th>
+                        <td>{{users.firstName}}</td>
+                        <td>{{users.lastName}}</td>
+                        <td>{{users.emailAddress}}</td>
+                        <td>{{users.mobileNo}}</td>
+                        <td>{{users.userName}}</td>
+                        <td>{{users.pincode.pincode1}}</td>
+                        <td>
+                            <!-- <button type="button" class="btn btn-primary mx-1"><i class="fa fa-eye" aria-hidden="true"></i></button> -->
+                            <button type="button" class="btn btn-warning mx-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit User"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                            <button type="button" class="btn btn-danger mx-1" (click)="openPopup(users.userId)" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete User"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        </td>
+                        <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <h4 class="pb-2 text-center">Are you sure, You want to delete this?</h4>
+                                        <div class="d-flex justify-content-center mt-4">
+                                            <button class="btn btn-danger mx-3" (click)="deleteUserData()">Delete</button>
+                                            <button class="btn btn-secondary mx-3" (click)="closePopup()">Cancel</button>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" (click)="closePopup()">
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

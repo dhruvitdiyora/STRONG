@@ -1,0 +1,338 @@
+<div class="container">
+    <div class="row shadow">
+        <div class="col-sm-4 p-0">
+            <div class="card">
+
+
+
+                <div class="media mt-3">
+                    <div class="d-flex mr-3">
+                        <a><img class="img-fluid rounded-circle" src="{{postDetail.user.profileImage}}" alt="User"></a>
+                    </div>
+                    <div class="media-body">
+                        <p class="m-0 curs" [routerLink]="['/profile',postDetail.userId]" routerLinkActive="active">
+                            {{postDetail.user.userName}}</p>
+                        <small><span class="curs" (click)="goToLink(postDetail.latitude,postDetail.longitude)"><i
+                                    class="icon ion-md-pin"></i>
+                                {{postDetail.locationName}},{{postDetail.city.cityName}},{{postDetail.state.stateName}}</span></small>
+                        <small><span><i class="icon ion-md-time"></i>{{postDetail.createdAt | dateAgo}}</span></small>
+                    </div>
+                </div>
+                <hr>
+                <div class="card-img-wrapper">
+                    <img src="{{postDetail.imageUrl}}" alt="" class="card-img-top">
+                </div>
+                <div class="card-body">
+                    <!-- <h1 class="card-title">
+                        Requirment of food
+                    </h1> -->
+                    <!-- <div>
+                        <strong>
+                            it is the area where the post description details are shown
+                        </strong>
+                    </div> -->
+                    <hr>
+                    <div>
+                        <div>
+                            <p class="lead">Requirment Type:
+                                <strong>{{postDetail.requirementType.requirementTypeName}}</strong>
+                            </p>
+                        </div>
+                        <div>
+                            <p class="lead">Help Required Count: <strong>{{postDetail.helpRequiredCount}}</strong> </p>
+                        </div>
+                        <!-- <div>
+                            <p class="lead">Location: <strong>Nikol</strong></p>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group d-flex">
+                        <!-- <button class="btn btn-primary">Get Details</button> -->
+                        <button class="btn btn-info" (click)="goToLink(postDetail.latitude,postDetail.longitude)">Visit
+                            Now</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="tab-panel p-3">
+                <tabset #statictabs class="member-tabset overflow-scroll">
+                    <tab heading="Post Details">
+                        <h1 class="">Overview of Need </h1>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="heading lead">
+                                    <strong>Location</strong>
+                                    <p class="lead">{{postDetail.locationName}}</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="heading lead">
+                                    <strong>City</strong>
+                                    <p class="lead">{{postDetail.city.cityName}}</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="heading lead">
+                                    <strong>State</strong>
+                                    <p class="lead">{{postDetail.state.stateName}}</p>
+                                </div>
+                            </div>
+                        </div><br>
+
+
+                        <!-- <div class="row">
+                            <div class="col-sm-6">
+                                <div class="heading lead">
+
+                                    <strong>Location Name</strong>
+                                    <p class="lead">Ranip</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="heading lead">
+                                    <strong>Location Name</strong>
+                                    <p class="lead">Ranip</p>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="heading lead">
+                                    <strong>Post Description</strong>
+                                    <p class="lead">{{postDetail.postDescription}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="mt-3">
+                            <ul class="d-flex mb-3 ps-3 " style="list-style: none;">
+                                <li [ngClass]="{'urgent': !postDetail.isUrgency}" class=" fs-5 fw-bolder mx-2 curs"
+                                    (click)="addUrgency(postDetail.postId)"><i class="fa fa-bolt fa-sm"
+                                        aria-hidden="true"></i>&nbsp;Urgency
+                                </li>
+                                <li [ngClass]="{'spamed': !postDetail.isSpam}" class="curs fs-5 fw-bolder mx-2 "
+                                    (click)="addSpam(postDetail.postId)"><i class="fa fa-ban fa-sm"
+                                        aria-hidden="true"></i>&nbsp;Spam</li>
+
+                                <li class=" fs-5 fw-bolder mx-2" type="button" (click)="openPopup(postDetail.postId)"><i
+                                        class="fa fa-share-alt" aria-hidden="true"></i>&nbsp;Share
+                                </li>
+
+                                <!-- <button type="button" class="btn btn-link"><span class="pull-right text-muted mx-1 mt-1">{{post.urgencyCount}} urgency</span></button>
+                                <button type="button" class="btn btn-link"><span class="pull-right text-muted mx-1 mt-1">{{post.spamCount}} spam</span></button>
+                                <button type="button" class="btn btn-link"><span class="pull-right text-muted mx-1 mt-1">{{post.spamCount}} spam</span></button> -->
+
+                                <span class="pull-right text-muted mx-1 mt-1 curs"
+                                    (click)="openUrgency(postDetail.postId,postDetail.urgencyCount)">{{postDetail.urgencyCount}}
+                                    urgency</span>
+                                <span class="pull-right text-muted mx-1 mt-1 curs"
+                                    (click)="openSpam(postDetail.postId,postDetail.spamCount)">{{postDetail.spamCount}}
+                                    spam</span>
+                                <span class="pull-right text-muted mx-1 mt-1 curs"
+                                    (click)="cmntShow(postDetail.postId,postDetail.commentsCount)">{{postDetail.commentsCount}}
+                                    comments</span>
+                                <li *ngIf="!save" (click)="addBookmark(postDetail.postId)"
+                                    class=" fs-5 fw-bolder ms-auto me-3 curs"><i class="fa fa-bookmark-o"
+                                        aria-hidden="true"></i>&nbsp;Save
+                                </li>
+                                <li *ngIf="save" (click)="addBookmark(postDetail.postId)"
+                                    class=" fs-5 fw-bolder ms-auto me-3 curs"><i class="fa fa-bookmark"
+                                        aria-hidden="true"></i>&nbsp;Saved
+                                </li>
+                            </ul>
+
+                            <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':urgencyDisplay}">
+                                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <div class="modal-header">
+                                                <h4>Urgency</h4>
+                                                <button type="button" class="btn-close btn-danger"
+                                                    (click)="closeUrgency()" aria-label="Close"></button>
+                                            </div>
+                                            <div class="row mt-2" *ngFor="let urgency of allUrgency">
+                                                <div class="d-flex flex-row align-items-center col-md-1"> <img
+                                                        src="{{urgency.user.profileImage}}" width="50"
+                                                        class="rounded-circle">
+                                                    <div class="d-flex flex-column col-md-8">
+                                                        <h6 class="name px-2">{{urgency.user.userName}}</h6>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="row">
+                                                    <p class="lead">{{urgency.createdBy}}</p>
+                                                </div> -->
+
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" (click)="closeUrgency()">
+                                                Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <h4 class="pb-2">Share this link via</h4>
+                                            <div class="d-flex align-items-center icons">
+                                                <a
+                                                    class="fs-5 d-flex mx-2 px-2 py-2 border border-1 rounded-circle border-info share-logo"><i
+                                                        class="fa fa-facebook-square fa-lg" aria-hidden="true"></i></a>
+
+                                                <a
+                                                    class="fs-5 d-flex mx-2 px-2 py-2 border border-1 rounded-circle border-info share-logo "><i
+                                                        class="fa fa-twitter-square fa-lg" aria-hidden="true"></i></a>
+
+                                                <a
+                                                    class="fs-5 d-flex mx-2 px-2 py-2 border border-1 rounded-circle border-info share-logo instagram-logo"><i
+                                                        class="fa fa-instagram fa-lg" aria-hidden="true"></i></a>
+
+                                                <a
+                                                    class="fs-5 d-flex mx-2 px-2 py-2 border border-1 rounded-circle border-info share-logo whatsapp-logo"><i
+                                                        class="fa fa-whatsapp fa-lg" aria-hidden="true"></i></a>
+
+                                                <a
+                                                    class="fs-5 d-flex mx-2 px-2 py-2 border border-1 rounded-circle border-info share-logo"><i
+                                                        class="fa fa-telegram fa-lg" aria-hidden="true"></i></a>
+                                            </div>
+                                            <h5 class="pt-2 mt-3">Or copy link</h5>
+                                            <div class="field d-flex">
+                                                <!-- <a class="fs-5 d-flex mx-2 px-2 py-2"
+                                                                style="text-decoration: none;">
+                                                                <i class="fa fa-link fa-lg" aria-hidden="true"></i></a>  -->
+                                                <input type="text" id="sharepost" class="form-control"
+                                                    value="some.com/share" disabled>
+                                                <button class="btn btn-success ms-2"><i class="fa fa-clone fa-lg"
+                                                        aria-hidden="true" ngbTooltip="Copy link to Clipboard"
+                                                        (click)="copyToClip()"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" (click)="closePopup()">
+                                                Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':spamDisplay}">
+                                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <div class="modal-header">
+                                                <h4 class="pb-2">Spam</h4>
+                                                <button type="button" class="btn-close btn-danger" (click)="closeSpam()"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="row mt-3" *ngFor="let spam of allSpam">
+                                                <div class="d-flex flex-row align-items-center col-md-1"> <img
+                                                        src="{{spam.user.profileImage}}" width="50"
+                                                        class="rounded-circle mt-1">
+                                                    <div class="d-flex flex-column col-md-8">
+                                                        <h6 class="name px-2">{{spam.user.userName}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" (click)="closeSpam()">
+                                                Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="d-flex me-3 media">
+                                    <a><img class="comment-logo img-auto rounded-circle"
+                                            src="{{postDetail.user.profileImage}}" alt="User"></a>
+                                    <div class="form-control d-flex ms-2">
+                                        <input [(ngModel)]="comment" type="text"
+                                            class="form-control shadow-none me-2 border-0 p-0"
+                                            placeholder="write a commment">
+                                        <button [disabled]="!comment" type="submit" class="btn btn-success btn-sm"
+                                            (click)="addComment(postDetail.postId)"><i class="fa fa-paper-plane "
+                                                aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-primary mx-auto"
+                                    (click)="cmntShow(postDetail.postId,postDetail.commentsCount)">Load
+                                    more</button>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div *ngIf="show" class="bottomcmnt">
+                            <div #target>
+                                <h1>Comments</h1>
+                                <hr>
+                                <div *ngFor="let cmnt of postCmnt">
+
+                                    <div class="row">
+                                        <div class="d-flex me-3 media media-body col-md-12">
+                                            <a><img class="comment-logo img-auto rounded-circle"
+                                                    src="{{cmnt.user.profileImage}}" alt="User"></a>
+                                            <div class="d-flex ms-2">
+                                                <div class="d-flex flex-column col-md-8">
+                                                    <h4 class="name px-2">{{cmnt.user.userName}}</h4>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="d-flex flex-row align-items-center col-md-1">
+    
+                                        </div> -->
+                                    <div class="row cmntdetail">
+                                        <p class="lead">{{cmnt.comment}}</p>
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </tab>
+
+
+                    <tab heading="Photos">
+                        <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery mt-1">
+                        </ngx-gallery>
+                    </tab>
+
+                    <tab heading="Location">
+                        <div>
+                            <agm-map style="height:400px" [zoom]='15' [latitude]="postDetail.latitude"
+                                [longitude]="postDetail.longitude">
+                                <agm-marker [latitude]="postDetail.latitude" [longitude]="postDetail.longitude">
+                                </agm-marker>
+                            </agm-map>
+                        </div>
+
+                    </tab>
+
+                </tabset>
+
+            </div>
+        </div>
+    </div>
+</div>

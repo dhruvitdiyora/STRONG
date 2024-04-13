@@ -1,0 +1,60 @@
+<!-- <div class="row">
+    <div class="col-xl-12">
+        <div class="d-flex ms-3">
+            <i class="fa fa-clock-o fa-2x" aria-hidden="true"></i>
+            <h4 class="ms-2 fw-bolder">What is happning?</h4>
+        </div>
+        <ul class="ms-4">
+            <li>List One</li>
+            <li>List Two</li>
+            <li>List Three</li>
+            <li>List Four</li>
+        </ul>
+    </div>
+</div> -->
+
+<div class="row mt-2">
+  <div class="col-xl-12">
+    <div class="d-flex ms-3">
+      <i class="fa fa-calendar fa-lg mt-1" aria-hidden="true"></i>
+      <h5 class="ms-2 fw-bolder">Events</h5>
+    </div>
+    <ul *ngFor="let events of eventList; let i = index" class="ms-4">
+      <div *ngIf="i <= 5" class="row curs">
+        <li
+          [routerLink]="[
+            '/organisation',
+            events.eventOrganiserId,
+            'event',
+            events.eventId
+          ]"
+        >
+          {{ events.eventName }}
+        </li>
+      </div>
+    </ul>
+    <!-- <ul *ngFor="let events of eventList.slice(0, 4);" class="ms-4">
+            <li [routerLink]="['/organisation',events.eventOrganiserId,'event',events.eventId]">{{events.eventName}}
+            </li>
+        </ul> -->
+  </div>
+</div>
+
+<div class="row mt-2">
+  <div class="col-xl-12">
+    <div class="d-flex ms-3">
+      <i class="fa fa-building-o fa-lg mt-1" aria-hidden="true"></i>
+      <h5 class="ms-2 fw-bolder">Organisations</h5>
+    </div>
+    <ul *ngFor="let orgs of orgList; let i = index" class="ms-4">
+      <div *ngIf="i <= 5" class="row curs">
+        <li [routerLink]="['/organisation', orgs.organisationDataId]">
+          {{ orgs.organisationName }}
+        </li>
+      </div>
+    </ul>
+    <!-- <ul *ngFor="let orgs of orgList.slice(0, 4);" class="ms-4">
+            <li [routerLink]="['/organisation',orgs.organisationDataId]">{{orgs.organisationName}}</li>
+        </ul> -->
+  </div>
+</div>

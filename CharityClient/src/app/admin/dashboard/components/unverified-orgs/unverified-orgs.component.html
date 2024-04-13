@@ -1,0 +1,149 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayEdit}">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title pb-2 text-center" id="exampleModalLabel">Edit Organisation
+                            </h5>
+                            <button type="button" class="btn-close" (click)="closeOrgModal()"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form [formGroup]="orgDetailForm" class="form p-3 m-3">
+
+                                <div class="container">
+                                    <div class="row">
+                                        <div class=" col-xl-5 col-sm-12">
+                                            <input id="organisationName" class="form-control mt-3" type="text"
+                                                formControlName="organisationName" placeholder="Enter OrganisationName">
+                                            <p class="text-danger"
+                                                *ngIf="orgDetailForm.get('organisationName')?.hasError('required') &&orgDetailForm.get('organisationName')?.touched">
+                                                Organisation Name is Required
+                                            </p>
+                                        </div>
+                                        <div class=" col-xl-7 col-sm-12">
+                                            <input id="organisationAddress" class="form-control mt-3" type="text"
+                                                formControlName="organisationAddress" placeholder="Enter Organisation Address">
+                                            <p class="text-danger"
+                                                *ngIf="orgDetailForm.get('organisationAddress')?.hasError('required') &&orgDetailForm.get('organisationAddress')?.touched">
+                                                Organisation Address is Required
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class=" col-xl-5 col-sm-12">
+                                            <input id="organisatioWebUrl" class="form-control mt-3" type="text"
+                                                formControlName="organisatioWebUrl" placeholder="Enter organisatioWebUrl">
+                                            <!-- <p class="text-danger"
+                                                *ngIf="orgDetailForm.get('organisatioWebUrl')?.hasError('required') &&orgDetailForm.get('organisatioWebUrl')?.touched">
+                                                Organisation WebUrl is Required
+                                            </p> -->
+                                        </div>
+                                        <div class=" col-xl-7 col-sm-12">
+                                            <input id="organisationDetail" class="form-control mt-3" type="text"
+                                                formControlName="organisationDetail" placeholder="Enter Organisation Detail">
+                                            <!-- <p class="text-danger"
+                                                *ngIf="pincodeDetailForm.get('organisationDetail')?.hasError('required') &&pincodeDetailForm.get('organisationDetail')?.touched">
+                                                Organisation Detail is Required
+                                            </p> -->
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <input id="organisationLogoUrl" type="file" name="files" accept="image/*" class="form-control mt-3" formControlName="organisationLogoUrl" (change)="showPreview($event)">
+                                            <!-- <p class="text-danger"
+                                                *ngIf="orgDetailForm.get('organisationLogoUrl')?.hasError('required') &&orgDetailForm.get('organisationLogoUrl')?.touched">
+                                                Image is required
+                                            </p> -->
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+                                                <img [src]="imageURL" [alt]="orgDetailForm.value.name" 
+                                                    class="form-control mt-3">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button [disabled]="orgDetailForm.invalid" class="btn btn-success mx-3" (click)="editOrg()">Save</button>
+                            <button type="button" class="btn btn-danger" (click)="closeOrgModal()">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">OrganisationId</th>
+                        <th scope="col">Organisation Name</th>
+                        <th scope="col">Contact Number</th>
+                        <th scope="col">Organisation Username</th>
+                        <th scope="col">Organisation User</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let orgs of unverifiedOrgs">
+                        <th scope="row">{{orgs.organisationDataId}}</th>
+                        <td>{{orgs.organisationName}}</td>
+                        <td>{{orgs.organisationContactNo}}</td>
+                        <td>{{orgs.organisationUserName}}</td>
+                        <td>{{orgs.organisationUser.userName}}</td>
+                        <td>
+                            <!-- <button type="button" class="btn btn-primary mx-1"><i class="fa fa-eye" aria-hidden="true"></i></button> -->
+                            <button type="button" class="btn btn-warning mx-1" (click)="openEditOrg(orgs.organisationDataId)" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Organisation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                            <button type="button" class="btn btn-success mx-1" (click)="openVerify(orgs.organisationDataId)" data-bs-toggle="tooltip" data-bs-placement="top" title="Verify Organisation"><i class="fa fa-check" aria-hidden="true"></i></button>
+                            <button type="button" class="btn btn-danger mx-1" (click)="openDelete(orgs.organisationDataId)" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Organisation"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        </td>
+                        <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyleVerify}">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <h4 class="pb-2 text-center">Are you sure, You want to Accept this?</h4>
+                                        <div class="d-flex justify-content-center mt-4">
+                                            <button class="btn btn-success mx-3" (click)="verifyOrg()">Verify</button>
+                                            <button class="btn btn-secondary mx-3" (click)="closeVerify()">Cancel</button>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" (click)="closeVerify()">
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyleDelete}">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <h4 class="pb-2 text-center">Are you sure, You want to delete this?</h4>
+                                        <div class="d-flex justify-content-center mt-4">
+                                            <button class="btn btn-danger mx-3" (click)="deleteOrg()">Delete</button>
+                                            <button class="btn btn-secondary mx-3" (click)="closeDelete()">Cancel</button>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" (click)="closeDelete()">
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
+                    </tr>
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+</div>

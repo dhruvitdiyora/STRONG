@@ -1,0 +1,112 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayEdit}">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title pb-2 text-center" id="exampleModalLabel">Edit Event
+                            </h5>
+                            <button type="button" class="btn-close" (click)="closeEventPostModal()"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form [formGroup]="eventDetailForm" class="form p-3 m-3">
+
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <input id="content" class="form-control mt-3" type="text"
+                                                formControlName="content" placeholder="Enter content">
+                                            <p class="text-danger"
+                                                *ngIf="eventDetailForm.get('content')?.hasError('required') &&eventDetailForm.get('content')?.touched">
+                                                Content is Required
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <input id="postUrl" type="file" name="files" accept="image/*"
+                                            class="form-control mt-3" formControlName="postUrl"
+                                            (change)="showPreview($event)">
+                                        <!-- <p class="text-danger"
+                                                *ngIf="orgDetailForm.get('organisationLogoUrl')?.hasError('required') &&orgDetailForm.get('organisationLogoUrl')?.touched">
+                                                Image is required
+                                            </p> -->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+                                            <img [src]="imageURL" [alt]="eventDetailForm.value.name"
+                                                class="form-control mt-3">
+                                        </div>
+                                    </div>
+                                </div>
+                        
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button [disabled]="eventDetailForm.invalid" class="btn btn-success mx-3"
+                            (click)="editEvent()">Save</button>
+                        <button type="button" class="btn btn-danger" (click)="closeEventPostModal()">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">EventPostId</th>
+                    <th scope="col">Event Name</th>
+                    <th scope="col">Organisation Name</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let eventPosts of eventPostsList">
+                    <th scope="row">{{eventPosts.charityEventPostId}}</th>
+                    <td>{{eventPosts.event.eventName}}</td>
+                    <td>{{eventPosts.event.eventOrganiser.organisationName}}</td>
+                    <td>{{eventPosts.user.userName}}</td>
+                    <td>
+                        <!-- <button type="button" class="btn btn-primary mx-1"><i class="fa fa-eye" aria-hidden="true"></i></button> -->
+                        <button type="button" class="btn btn-warning mx-1" (click)="openEditEvent(eventPosts.charityEventPostId)" data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="Edit Event Post"><i class="fa fa-pencil-square-o"
+                                aria-hidden="true"></i></button>
+                        <button type="button" class="btn btn-danger mx-1"
+                            (click)="openPopup(eventPosts.charityEventPostId)" data-bs-toggle="tooltip"
+                            data-bs-placement="top" title="Delete Event Post"><i class="fa fa-trash"
+                                aria-hidden="true"></i></button>
+                    </td>
+                    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <h4 class="pb-2 text-center">Are you sure, You want to delete this?</h4>
+                                    <div class="d-flex justify-content-center mt-4">
+                                        <button class="btn btn-danger mx-3"
+                                            (click)="deleteCharityEventPost()">Delete</button>
+                                        <button class="btn btn-secondary mx-3" (click)="closePopup()">Cancel</button>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" (click)="closePopup()">
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>

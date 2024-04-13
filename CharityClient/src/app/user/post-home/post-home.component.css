@@ -1,0 +1,186 @@
+.app-rightbar {
+  height: 860px;
+  overflow: auto;
+}
+
+.app-leftbar {
+  height: 860px;
+  overflow: auto;
+}
+
+.app-post-info {
+  height: 870px;
+  overflow: auto;
+}
+
+.opt{
+  font-size: 12px;
+}
+
+
+@media (max-width: 575px) {
+  .second {
+    order: 2;
+  }
+}
+@media (max-width: 1024px) {
+  .second {
+    order: 3;
+  }
+
+  .white{
+    background-color: white !important;
+  }
+}
+.curs{
+  cursor: pointer;
+}
+
+@media (max-width: 1199px) {    
+  .sel{
+    width: 200px;
+  }
+}
+
+@media (min-width:1200px) and (max-width: 1500px){ 
+  .sel{
+    margin-left: 0px;
+    padding-right: 5px;
+    width: 110px;
+    font-size: 10.5px;
+  }
+}
+@media (min-width:1501px) and (max-width: 1800px){ 
+  .sel{
+    margin-left: 0px;
+    padding-right: 5px;
+    width: 125px;
+  }
+}
+
+@media (min-width: 1801px) {    
+  .sel{
+    width: 160px;
+  }
+}
+
+/* 4k screen */
+@media (width:2560px) { 
+  .position-fixed{
+    bottom: 30px;
+    right: 450px;
+  }
+ }
+
+ @media (min-width:2351px) and (max-width: 2559px){ 
+  .position-fixed{
+    bottom: 30px;
+    right: 450px;
+  }
+ }
+ 
+
+ @media (min-width:2001px) and (max-width: 2350px){ 
+  .position-fixed{
+    bottom: 30px;
+    right: 400px;
+  }
+ }
+
+/* TV size */
+@media (min-width:1900px) and (max-width: 2000px){ 
+  .position-fixed{
+    bottom: 30px;
+    right: 340px;
+  }
+ }
+
+ @media (min-width:1651px) and (max-width: 1899px) { 
+  .position-fixed{
+    bottom: 30px;
+    right: 330px;
+  }
+ }
+
+@media (min-width: 1500px) and (max-width: 1650px) { 
+  .position-fixed{
+    bottom: 30px;
+    right: 290px;
+  } 
+
+}
+
+/* Larger desktop size */
+@media (min-width: 1400px) and (max-width: 1499px) { 
+  .position-fixed{
+    bottom: 30px;
+    right: 260px;
+  } 
+ }
+
+@media (min-width: 1300px) and (max-width: 1399px) { 
+  .position-fixed{
+    bottom: 30px;
+    right: 240px;
+  } 
+ }
+
+@media (min-width: 1200px) and (max-width: 1299px) { 
+  .position-fixed{
+    bottom: 30px;
+    right: 225px;
+  } 
+ }
+
+ @media (min-width: 992px) and (max-width: 1199px) { 
+  .position-fixed{
+    bottom: 30px;
+    right: 30px;
+  } 
+ }
+ 
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 991px) { 
+  .position-fixed{
+    bottom: 30px;
+    right: 30px;
+  } 
+ }
+ 
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) { 
+  .position-fixed{
+    bottom: 30px;
+    right: 30px;
+  }
+ }
+ 
+/* Landscape phones and down */
+@media (max-width: 600px) { 
+  .position-fixed{
+    bottom: 30px;
+    right: 30px;
+  } 
+ }
+
+
+
+.btn-circle.btn-xl {
+width: 70px;
+height: 70px;
+padding: 10px 16px;
+border-radius: 35px;
+font-size: 24px;
+line-height: 1.33;
+/* margin-right: 60px; */
+}
+
+.btn-circle {
+width: 30px;
+height: 30px;
+padding: 6px 0px;
+border-radius: 15px;
+text-align: center;
+font-size: 12px;
+line-height: 1.42857;
+}

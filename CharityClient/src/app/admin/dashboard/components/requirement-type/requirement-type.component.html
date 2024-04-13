@@ -1,0 +1,85 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="col-12">
+                <button type="button" class="btn btn-success btn-xl fw-bolder" (click)="openAddRequirementType()">Add Requirement Type
+                    &nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+                <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayAdd}">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 *ngIf="isAdd" class="modal-title pb-2 text-center">Add Requirement Type</h5>
+                                <h5 *ngIf="isEdit" class="modal-title pb-2 text-center">Edit Requirement Type</h5>
+                                <button type="button" class="btn-close" (click)="closeRequirementTypeModal()"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form [formGroup]="requirementTypeForm" class="form p-3 m-3">
+    
+                                    <div class="container">
+    
+                                        <div class="col-sm-12">
+                                            <input id="RequirementTypeName" class="form-control mt-3" type="text"
+                                                formControlName="requirementTypeName" placeholder="Enter RequirementType Name">
+                                            <p class="text-danger"
+                                                *ngIf="requirementTypeForm.get('RequirementTypeName')?.hasError('required') &&requirementTypeForm.get('RequirementTypeName')?.touched">
+                                                RequirementType Name is Required
+                                            </p>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button *ngIf="isAdd" [disabled]="requirementTypeForm.invalid" class="btn btn-success mx-3" (click)="addRequirementType()">Add</button>
+                                <button *ngIf="isEdit" [disabled]="requirementTypeForm.invalid" class="btn btn-success mx-3" (click)="editRequirementType()">Save</button>
+                                <button type="button" class="btn btn-danger" (click)="closeRequirementTypeModal()">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mt-3">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Requirement Type Id</th>
+                        <th scope="col">Requirement Type Name</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let requirements of requirementList">
+                        <th scope="row">{{requirements.requirementTypeId}}</th>
+                        <td>{{requirements.requirementTypeName}}</td>
+                        <td>
+                            <!-- <button type="button" class="btn btn-primary mx-1"><i class="fa fa-eye" aria-hidden="true"></i></button> -->
+                            <button type="button" class="btn btn-warning mx-1" (click)="openEditRequirementType(requirements.requirementTypeId)" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Requirement Type"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                            <button type="button" class="btn btn-danger mx-1" (click)="openPopup(requirements.requirementTypeId)" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Requirement Type"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        </td>
+                        <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <h4 class="pb-2 text-center">Are you sure, You want to delete this?</h4>
+                                        <div class="d-flex justify-content-center mt-4">
+                                            <button class="btn btn-danger mx-3" (click)="deleteRequirement()">Delete</button>
+                                            <button class="btn btn-secondary mx-3" (click)="closePopup()">Cancel</button>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" (click)="closePopup()">
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

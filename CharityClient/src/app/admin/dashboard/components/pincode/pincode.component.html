@@ -1,0 +1,137 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <button type="button" class="btn btn-success btn-xl fw-bolder" (click)="openAddPincode()">Add Pincode
+                &nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+            <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayAdd}">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 *ngIf="isAdd" class="modal-title pb-2 text-center" id="exampleModalLabel">Add Pincode</h5>
+                            <h5 *ngIf="isEdit" class="modal-title pb-2 text-center" id="exampleModalLabel">Edit Pincode
+                            </h5>
+                            <button type="button" class="btn-close" (click)="closePincodeModal()"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form [formGroup]="pincodeDetailForm" class="form p-3 m-3">
+
+                                <div class="container">
+                                    <div class="row">
+                                        <div class=" col-xl-6 col-sm-12">
+                                            <input id="pincode1" class="form-control mt-3" type="text"
+                                                formControlName="pincode1" placeholder="Enter Pincode">
+                                            <p class="text-danger"
+                                                *ngIf="pincodeDetailForm.get('pincode1')?.hasError('required') &&pincodeDetailForm.get('pincode1')?.touched">
+                                                Pincode is Required
+                                            </p>
+                                        </div>
+                                        <div class=" col-xl-6 col-sm-12">
+                                            <input id="district" class="form-control mt-3" type="text"
+                                                formControlName="district" placeholder="Enter District Name">
+                                            <p class="text-danger"
+                                                *ngIf="pincodeDetailForm.get('district')?.hasError('required') &&pincodeDetailForm.get('district')?.touched">
+                                                District Name is Required
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class=" col-xl-6 col-sm-12">
+                                            <select class="form-control mt-3" name="city" id="city"
+                                                 formControlName="cityId" (click)="cityVal()">
+                                                <option *ngFor="let city of cities;" [value]="city.cityId">
+                                                    {{city.cityName}}
+                                                </option>
+                                            </select>
+                                            <p class="text-danger" *ngIf="cityDropDown">
+                                                City is required field
+                                            </p>
+                                        </div>
+                                        <div class=" col-xl-6 col-sm-12">
+                                            <select class="form-control mt-3" name="state" id="state"
+                                                 formControlName="stateId" (click)="stateVal()">
+                                                <option *ngFor="let state of states;" [value]="state.stateId">
+                                                    {{state.stateName}}
+                                                </option>
+                                            </select>
+                                            <p class="text-danger" *ngIf="stateDropDown">
+                                                State is required field
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <input id="postOfficeName" class="form-control mt-3" type="text"
+                                                formControlName="postOfficeName" placeholder="Enter Post Office Name">
+                                            <p class="text-danger"
+                                                *ngIf="pincodeDetailForm.get('postOfficeName')?.hasError('required') &&pincodeDetailForm.get('postOfficeName')?.touched">
+                                                Post Office Name is Required
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button *ngIf="isAdd" [disabled]="pincodeDetailForm.invalid" class="btn btn-success mx-3" (click)="addPincode()">Add</button>
+                            <button *ngIf="isEdit" [disabled]="pincodeDetailForm.invalid" class="btn btn-success mx-3" (click)="editPincode()">Save</button>
+                            <button type="button" class="btn btn-danger" (click)="closePincodeModal()">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mt-3">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">PincodeId</th>
+                        <th scope="col">Pincode</th>
+                        <th scope="col">Post Office Name</th>
+                        <th scope="col">District</th>
+                        <th scope="col">City Name</th>
+                        <th scope="col">State Name</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let pincodes of pincodeList | paginate: { itemsPerPage: count, currentPage: p}">
+                        <th scope="row">{{pincodes.pincodeId}}</th>
+                        <td>{{pincodes.pincode1}}</td>
+                        <td>{{pincodes.postOfficeName}}</td>
+                        <td>{{pincodes.district}}</td>
+                        <td>{{pincodes.city.cityName}}</td>
+                        <td>{{pincodes.state.stateName}}</td>
+                        <td>
+                            <!-- <button type="button" class="btn btn-primary mx-1"><i class="fa fa-eye" aria-hidden="true"></i></button> -->
+                            <button type="button" class="btn btn-warning mx-1" (click)="openEditPincode(pincodes.pincodeId)" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Pincode"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                            <button type="button" class="btn btn-danger mx-1" (click)="openPopup(pincodes.pincodeId)" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Pincode"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        </td>
+                        <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <h4 class="pb-2 text-center">Are you sure, You want to delete this?</h4>
+                                        <div class="d-flex justify-content-center mt-4">
+                                            <button class="btn btn-danger mx-3" (click)="deletePincode()">Delete</button>
+                                            <button class="btn btn-secondary mx-3" (click)="closePopup()">Cancel</button>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" (click)="closePopup()">
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </tr>
+                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

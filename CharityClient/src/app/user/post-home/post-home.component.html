@@ -1,0 +1,151 @@
+<div class="navbar-expand-lg">
+  <div class="row">
+    <div class="col-6 bg-dark">
+      <div class="text-center">
+        <button class="navbar-toggler bg-secondary my-1" type="button" data-bs-toggle="collapse"
+          data-bs-target="#org-left-toggler" aria-expanded="false" aria-label="Toggle navigation"
+          (click)="isCollapsedLeft = !isCollapsedLeft" [attr.aria-expanded]="!isCollapsedLeft"
+          aria-controls="org-left-toggler">
+          <span><i class="fa fa-user-circle fa-lg" aria-hidden="true"></i></span>
+        </button>
+      </div>
+    </div>
+    <div class="col-6 bg-dark">
+      <div class="text-center">
+        <button class="navbar-toggler bg-secondary my-1" type="button" data-bs-toggle="collapse"
+          data-bs-target="#org-right-toggler" aria-expanded="false" aria-label="Toggle navigation"
+          (click)="isCollapsedRight = !isCollapsedRight" [attr.aria-expanded]="!isCollapsedRight"
+          aria-controls="org-Right-toggler">
+          <span><i class="fa fa-calendar fa-lg" aria-hidden="true"></i></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-2 bg-dark text-light pt-3 order-lg-1 app-leftbar" id="org-right-toggler"
+      [ngbCollapse]="isCollapsedLeft">
+      <div class="row mx-4">
+        <div class="field">
+          <!-- <select *ngIf="sortshow" class="custom-select mb-3 form-control mt-3 curs"
+              (change)="onSortSelected($event)">
+              <option *ngFor="let sort of sortOptions" [value]="sort.value">
+                {{ sort.name }}
+              </option>
+            </select> -->
+
+          <div class="d-flex ms-2 my-3">
+            <i class="fa fa-filter fa-lg mt-1 curs" aria-hidden="true"></i>
+            <h5 class="ms-2 fw-bolder curs" (click)="change()">Filter posts</h5>
+
+            <!-- <button *ngIf="show" type="button" class="btn btn-secondary mx-5" (click)="closeForm()">
+              Clear
+            </button> -->
+          </div>
+          <div class="container">
+
+            <form *ngIf="show" [formGroup]="filterForm" class="form px-3 container">
+              
+              <input id="username" class="form-control mt-1 opt sel" type="text" formControlName="username"
+                placeholder="Username" />
+              <input id="pincod" class="form-control mt-1 opt sel" type="text" formControlName="pincod"
+                (change)="checkPincode($event)" placeholder="pincode" />
+              <select class="form-control mt-1 curs sel opt" (change)="stateChange($event)" name="stateId" id="stateId"
+                formControlName="stateId">
+                <option *ngFor="let state of states" [value]="state.stateId">
+                  {{ state.stateName }}
+                </option>
+              </select>
+              <select class="form-control mt-1 curs sel opt" name="cityId" id="cityId" formControlName="cityId">
+                <option *ngFor="let city of cities" [value]="city.cityId">
+                  {{ city.cityName }}
+                </option>
+              </select>
+              <select class="form-control mt-1 curs sel opt" name="requirementTypeId" id="requirementTypeId"
+                formControlName="requirementTypeId">
+                <option *ngFor="let req of requirment" [value]="req.requirementTypeId">
+                  {{ req.requirementTypeName }}
+                </option>
+              </select>
+              <select class="form-control mt-1 sel opt" name="sort" id="sort" formControlName="sort">
+                <option *ngFor="let sort of sortOptions" [value]="sort.value">
+                  {{ sort.name }}
+                </option>
+              </select>
+              <div class="row mt-1">
+                <div class="col-md-5-xl-12">
+                  <button *ngIf="show" (click)="getPosts()" type="submit" class="btn btn-success mt-3"><i
+                      class="fa fa-filter fa-lg mt-1" aria-hidden="true"></i></button>&nbsp;
+                  <button *ngIf="show" (click)="closeForm()" type="submit" class="btn btn-danger mt-3"><i
+                      class="fa fa-refresh fa-lg mt-1" aria-hidden="true"></i></button>
+                </div>
+              </div>
+              <!-- <button *ngIf="show" (click)="getPosts()" type="submit" class="btn btn-success d-flex mt-3">
+                <i class="fa fa-filter fa-lg mt-1" aria-hidden="true"></i>
+              </button>
+              <button *ngIf="show" (click)="closeForm()" type="submit" class="btn btn-danger d-flex mt-3">
+                <i class="fa fa-filter fa-trash fa-lg mt-1" aria-hidden="true"></i>
+              </button> -->
+              <!-- <button *ngIf="show" type="button" class="btn btn-secondary mx-5" (click)="closeForm()">
+              Clear
+            </button> -->
+            </form>
+          </div>
+        </div>
+        <div class="d-flex ms-2 my-3 curs">
+          <i class="fa fa-bell fa-lg mt-1" aria-hidden="true"></i>
+          <h5 class="ms-2 fw-bolder">Notification</h5>
+        </div>
+        <div class="d-flex ms-2 my-3 curs" (click)="openProfile()">
+          <i class="fa fa-user fa-lg mt-1" aria-hidden="true"></i>
+          <h5 class="ms-3 fw-bolder">Profile</h5>
+        </div>
+        <div class="d-flex ms-2 my-3 curs">
+          <i class="fa fa-bookmark fa-lg mt-1" aria-hidden="true"></i>
+          <h5 class="ms-3 fw-bolder">Bookmarks</h5>
+        </div>
+        <div class="d-flex ms-2 my-3">
+          <i class="fa fa-cog fa-lg mt-1" aria-hidden="true"></i>
+          <h5 class="ms-3 fw-bolder">Settings</h5>
+        </div>
+        <div class="d-flex ms-2 my-3">
+          <i class="fa fa-hashtag fa-lg mt-1" aria-hidden="true"></i>
+          <h5 class="ms-2 fw-bolder">Explore</h5>
+        </div>
+        <!-- <div class="d-flex ms-2 my-3">
+                            <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
+                            <h4 class="ms-2 fw-bolder" (click)="openCreateForm()">Create new</h4>
+                        </div>  -->
+      </div>
+    </div>
+    <!-- <app-leftbar></app-leftbar> -->
+    <!-- <app-post-info *ngFor="let post of posts" [post]="post" class="col-xl-6 order-sm-2 order-md-2 order-lg-2 second">
+                </app-post-info> -->
+    <div class="col-xl-8 order-sm-2 order-md-2 order-lg-2 second app-post-info" [scrollWindow]="false"
+      [infiniteScrollDisabled]="isScroll" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="150"
+      (scrolled)="onScroll()" (scroll)="scrollCheck()">
+      <div *ngIf="posts.length == 0">
+        <app-no-data></app-no-data>
+      </div>
+      <div *ngIf="posts.length > 0">
+        <div *ngFor="let post of posts">
+          <!-- <app-post [post]=post class="posts"></app-post> -->
+          <app-post [post]="post" class="posts" (getPostToChild)="getReload()"></app-post>
+        </div>
+      </div>
+      <div *ngIf="postButtonShow">
+        <button type="button" class="btn btn-success btn-circle btn-xl position-fixed mx-2" (click)="openCreateForm()"
+          data-bs-toggle="tooltip" data-bs-placement="top" title="Create Post">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+    <!-- <app-leftbar class="col-xl-3 bg-dark text-light pt-3 order-lg-1" id="org-right-toggler"
+            [ngbCollapse]="isCollapsedLeft"></app-leftbar> -->
+    <!-- <app-post-info *ngFor="let post of posts" [post]="post" class="col-xl-6 order-sm-2 order-md-2 order-lg-2 second">
+        </app-post-info> -->
+    <!-- <app-post-info class="col-xl-6 order-sm-2 order-md-2 order-lg-2 second"></app-post-info> -->
+    <app-rightbar class="col-xl-2 bg-dark text-light pt-3 order-lg-3" id="org-right-toggler"
+      [ngbCollapse]="isCollapsedRight"></app-rightbar>
+  </div>
+</div>

@@ -1,0 +1,180 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayEdit}">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title pb-2 text-center" id="exampleModalLabel">Edit Event
+                            </h5>
+                            <button type="button" class="btn-close" (click)="closeEventModal()"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form [formGroup]="eventDetailForm" class="form p-3 m-3">
+
+                                <div class="container">
+                                    <div class="row">
+                                        <div class=" col-xl-5 col-sm-12">
+                                            <input id="eventName" class="form-control mt-3" type="text"
+                                                formControlName="eventName" placeholder="Enter EventName">
+                                            <p class="text-danger"
+                                                *ngIf="eventDetailForm.get('eventName')?.hasError('required') &&eventDetailForm.get('eventName')?.touched">
+                                                Event Name is Required
+                                            </p>
+                                        </div>
+                                        <div class=" col-xl-7 col-sm-12">
+                                            <input id="eventDescription" class="form-control mt-3" type="text"
+                                                formControlName="eventDescription" placeholder="Enter EventDescription">
+                                            <p class="text-danger"
+                                                *ngIf="eventDetailForm.get('eventDescription')?.hasError('required') &&eventDetailForm.get('eventDescription')?.touched">
+                                                Event Description is Required
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class=" col-xl-6 col-sm-12">
+                                            <input id="eventStartDate" class="form-control mt-3" type="datetime-local"
+                                                formControlName="eventStartDate" placeholder="Enter Event StartDate">
+                                            <p class="text-danger"
+                                                *ngIf="eventDetailForm.get('eventStartDate')?.hasError('required') &&eventDetailForm.get('eventStartDate')?.touched">
+                                                Event StartDate is Required
+                                            </p>
+                                        </div>
+                                        <div class=" col-xl-6 col-sm-12">
+                                            <input id="eventEndDate" class="form-control mt-3" type="datetime-local"
+                                                formControlName="eventEndDate" placeholder="Enter Event EndDate">
+                                            <p class="text-danger"
+                                                *ngIf="eventDetailForm.get('eventEndDate')?.hasError('required') &&eventDetailForm.get('eventEndDate')?.touched">
+                                                Event EndDate is Required
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class=" col-xl-6 col-sm-12">
+                                            <input id="eventType" class="form-control mt-3" type="text"
+                                                formControlName="eventType" placeholder="Enter Event Type">
+                                            <p class="text-danger"
+                                                *ngIf="eventDetailForm.get('eventType')?.hasError('required') &&eventDetailForm.get('eventType')?.touched">
+                                                Event Type is Required
+                                            </p>
+                                        </div>
+                                        <div class=" col-xl-6 col-sm-12">
+                                            <input id="locationName" class="form-control mt-3" type="text"
+                                                formControlName="locationName" placeholder="Enter Location Name">
+                                                <p class="text-danger"
+                                                *ngIf="eventDetailForm.get('locationName')?.hasError('required') &&eventDetailForm.get('locationName')?.touched">
+                                                Event Type is Required
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col- xl-6 col-sm-4">
+                                            <input id="pincod" class="form-control mt-3" type="number" formControlName="pincod"
+                                                placeholder="pincode" (change)="checkPincode($event)">
+                                            <p>
+                                                <span class=" text-danger"
+                                                    *ngIf="eventDetailForm.get('pincod')?.hasError('required') && eventDetailForm.get('pincod')?.touched">
+                                                    Pincode is required
+                                                </span>
+                                                <span class=" text-danger"
+                                                    *ngIf="(eventDetailForm.get('pincod')?.hasError('required') ||eventDetailForm.get('pincod')?.hasError('notavail') )&&(eventDetailForm.get('pincod')?.touched|| eventDetailForm.get('pincod').dirty)">
+                                                    Enter Valid Pincode
+                                                </span>
+                                                <span class=" text-danger"
+                                                    *ngIf="eventDetailForm.get('pincod')?.hasError('minlength') ||eventDetailForm.get('pincod')?.hasError('notavail') &&eventDetailForm.get('pincod')?.touched">
+                                                    enter 6 digit
+                                                </span>
+                                                <span class=" text-danger"
+                                                *ngIf="eventDetailForm.get('pincodeId')?.hasError('required') &&eventDetailForm.get('pincod')?.touched">
+                                                Pincode is required. Enter Valid pincode
+                                            </span>
+                                            <span class="text-success" *ngIf="pinVal">
+                                                your pincode is valid
+                                            </span>
+                                            </p>
+                                        </div>
+        
+                                        <div class="col-xl-6 col-sm-2">
+                                            <button class="btn btn-primary mt-3" (click)="checkPincode($event)">Check Pincode</button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <input id="eventBannerUrl" type="file" name="files" accept="image/*" class="form-control mt-3" formControlName="eventBannerUrl" (change)="showPreview($event)">
+                                            <!-- <p class="text-danger"
+                                                *ngIf="orgDetailForm.get('organisationLogoUrl')?.hasError('required') &&orgDetailForm.get('organisationLogoUrl')?.touched">
+                                                Image is required
+                                            </p> -->
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+                                                <img [src]="imageURL" [alt]="eventDetailForm.value.name" 
+                                                    class="form-control mt-3">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button [disabled]="eventDetailForm.invalid" class="btn btn-success mx-3" (click)="editEvent()">Save</button>
+                            <button type="button" class="btn btn-danger" (click)="closeEventModal()">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">EventId</th>
+                        <th scope="col">Event Name</th>
+                        <th scope="col">Event Statrt Date</th>
+                        <th scope="col">Event End Date</th>
+                        <th scope="col">Event Type</th>
+                        <th scope="col">Organisation Name</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let events of eventsList">
+                        <th scope="row">{{events.eventId}}</th>
+                        <td>{{events.eventName}}</td>
+                        <td>{{events.eventStartDate | date:'short'}}</td>
+                        <td>{{events.eventEndDate | date:'short'}}</td>
+                        <td>{{events.eventType}}</td>
+                        <td>{{events.eventOrganiser.organisationName}}</td>
+                        <td>
+                            <!-- <button type="button" class="btn btn-primary mx-1"><i class="fa fa-eye" aria-hidden="true"></i></button> -->
+                            <button type="button" class="btn btn-warning mx-1" (click)="openEditEvent(events.eventId)" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Event"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                            <button type="button" class="btn btn-danger mx-1" (click)="openPopup(events.eventId)" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Event"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        </td>
+                        <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <h4 class="pb-2 text-center">Are you sure, You want to delete this?</h4>
+                                        <div class="d-flex justify-content-center mt-4">
+                                            <button class="btn btn-danger mx-3" (click)="deleteCharityEvent()">Delete</button>
+                                            <button class="btn btn-secondary mx-3" (click)="closePopup()">Cancel</button>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" (click)="closePopup()">
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

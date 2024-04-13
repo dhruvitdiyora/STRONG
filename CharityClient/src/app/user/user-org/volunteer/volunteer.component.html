@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col">
+        <div class="card shadow">
+            <div class="card-header border-0">
+                <h3 class="mb-0">Volunteers of Organisation</h3>
+            </div>
+            <div class="table-responsive card-body">
+                <table class="table align-items-center table-flush">
+                    <thead class="thead-light fs-4">
+                        <tr>
+                            <th scope="col">Name</th>
+                        </tr>
+                    </thead>
+                    <tbody class="fs-5">
+                        <tr class="curs" [routerLink]="['/profile',vols.volunteerUser.userId]" routerLinkActive="active" *ngFor="let vols of volList">
+                            <td>
+                                {{vols.volunteerUser.firstName}} {{vols.volunteerUser.lastName}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

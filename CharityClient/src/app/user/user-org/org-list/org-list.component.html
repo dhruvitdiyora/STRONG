@@ -1,0 +1,20 @@
+<div *ngFor="let orgs of orgList">
+    <div class="panel panel-white profile-widget mt-3">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="d-flex align-items-center">
+                    <img src="{{orgs.organisationLogoUrl}}" class="org-logo rounded-circle ms-5" alt="avatar">
+                    <div class="ms-auto">
+                        <h4 class="fs-2">{{orgs.organisationName}}</h4>
+                        <p class="text-secondary text-center fs-4">{{orgs.organisationUserName}}</p>
+                    </div>
+                    <div class="ms-auto me-3">
+                        <button [routerLink]="['/organisation',orgs.organisationDataId]" routerLinkActive="active"
+                            class="btn btn-success btn-lg rounded-pill fw-bolder">View</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <router-outlet></router-outlet> -->

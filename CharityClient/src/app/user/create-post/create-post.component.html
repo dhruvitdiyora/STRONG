@@ -1,0 +1,168 @@
+<div class="container">
+    <!-- Modal -->
+    <div class="modal" id="myModal" [ngStyle]="{'display':formDisplay}">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content modal-color">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create your Post</h5>
+                    <button type="button" class="btn-close" (click)="closeForm()"></button>
+                </div>
+                <div class="modal-body mx-4">
+                    <form [formGroup]="postCreateForm" class="form p-3 m-3">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <!-- <label class="form-label" for="postDescription">Post Description</label><br> -->
+                                    <input id="postDescription" class="form-control mt-3" type="text"
+                                        formControlName="postDescription" placeholder="Post Description">
+                                    <p class="text-danger"
+                                        *ngIf="postCreateForm.get('postDescription')?.hasError('required') &&postCreateForm.get('postDescription')?.touched">
+                                        Post Description is Required Field
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <select class="form-control mt-3" name="requirementType" id="requirementType"
+                                        formControlName="requirementTypeId" (click)="reqVal()">
+                                        <option *ngFor="let req of requirment;" [value]="req.requirementTypeId">
+                                            {{req.requirementTypeName}}
+                                        </option>
+                                    </select>
+                                    <p class="text-danger" *ngIf="reqDropdown">
+                                        Requirement type is required field
+                                    </p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input id="helpRequiredCount" class="form-control mt-3" type="number"
+                                        formControlName="helpRequiredCount" placeholder="Help RequiredCount">
+                                    <p class="text-danger"
+                                        *ngIf="postCreateForm.get('helpRequiredCount')?.hasError('required') &&(postCreateForm.get('helpRequiredCount')?.touched||postCreateForm.get('helpRequiredCount')?.dirty)">
+                                        Help Req. Count is required field
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <input id="locationName" class="form-control mt-3" type="text"
+                                        formControlName="locationName" placeholder="Location Name">
+                                    <p class="text-danger"
+                                        *ngIf="postCreateForm.get('locationName')?.hasError('required') &&postCreateForm.get('locationName')?.touched">
+                                        Location name is required
+                                    </p>
+                                </div>
+
+
+                                <div class="col-sm-4">
+                                    <input id="pincod" class="form-control mt-3" type="number" formControlName="pincod"
+                                        placeholder="pincode" (change)="checkPincode($event)">
+                                    <p>
+                                        <span class=" text-danger"
+                                            *ngIf="postCreateForm.get('pincod')?.hasError('required') && postCreateForm.get('pincod')?.touched">
+                                            Pincode is required
+                                        </span>
+                                        <span class=" text-danger"
+                                            *ngIf="(postCreateForm.get('pincod')?.hasError('required') ||postCreateForm.get('pincod')?.hasError('notavail') )&&(postCreateForm.get('pincod')?.touched|| postCreateForm.get('pincod').dirty)">
+                                            Enter Valid Pincode
+                                        </span>
+                                        <span class=" text-danger"
+                                            *ngIf="postCreateForm.get('pincod')?.hasError('minlength') ||postCreateForm.get('pincod')?.hasError('notavail') &&postCreateForm.get('pincod')?.touched">
+                                            enter 6 digit
+                                        </span>
+                                        <span class=" text-danger"
+                                            *ngIf="postCreateForm.get('pincodeId')?.hasError('required') &&postCreateForm.get('pincod')?.touched">
+                                            Pincode is required. Enter Valid pincode
+                                        </span>
+                                        <span class="text-success" *ngIf="pinVal">
+                                            your pincode is valid
+                                        </span>
+                                    </p>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <button class="btn btn-primary mt-3" (click)="checkPincode($event)">Check
+                                        Pincode</button>
+                                </div>
+
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <input type="text" id="longitude" class="form-control mt-3" readonly
+                                        formControlName="longitude">
+
+                                </div>
+                                <div class="col-sm-5">
+                                    <input type="text" id="latitude" class="form-control mt-3" readonly
+                                        formControlName="latitude">
+
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <button (click)="getLocation()" class="btn btn-primary mt-3 w-50">fetch</button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <select class="form-control mt-3" name="stateId" id="stateId"
+                                        formControlName="stateId" (click)="stateVal()" (change)="stateChange($event)">
+                                        <option *ngFor="let state of states;" [value]="state.stateId">
+                                            {{state.stateName}}
+                                        </option>
+                                    </select>
+                                    <p class="text-danger" *ngIf="stateDropdown">
+                                        State name is required
+                                    </p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <select class="form-control mt-3" name="cityId" id="cityId" formControlName="cityId"
+                                        (click)="cityVal()">
+
+                                        <option *ngFor="let city of cities;" [value]="city.cityId">
+                                            {{city.cityName}}
+                                        </option>
+                                    </select>
+
+                                    <p class="text-danger" *ngIf="cityDropdown">
+                                        City name Is Required
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input type="file" name="files" accept="image/*" class="form-control mt-3" multiple
+                                        min="5" formControlName="postImage" (change)="showPreview($event)">
+                                    <p class="text-danger"
+                                        *ngIf="postCreateForm.get('postImage')?.hasError('required') && postCreateForm.get('postImage')?.touched && imagee">
+                                        Image is required
+                                    </p>
+                                    <p class="text-danger" *ngIf="imagee1">
+                                        5 Image is required
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+                                        <img [src]="imageURL" [alt]="postCreateForm.value.name"
+                                            class="form-control mt-3">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="closeForm()" [routerLink]="['/home']"
+                        routerLinkActive="active">Close</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="postCreateForm.invalid"
+                        (click)="savePost()" [routerLink]="['/post']" routerLinkActive="active">Post</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

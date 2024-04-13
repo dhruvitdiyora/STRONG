@@ -1,0 +1,29 @@
+<div *ngIf="!hasRoute()" class="panel panel-white profile-widget mt-3">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="d-flex align-items-center">
+                <img src="{{orgList.organisationLogoUrl}}" class="org-logo rounded-circle ms-3" alt="avatar">
+                <h4 class="ms-3 fs-2 ms-auto me-auto">{{orgList.organisationName}}</h4>
+            </div>
+
+            <div class="px-3 mt-2">
+                <div class="fw-bolder fs-6">About Organisation:&nbsp;</div>
+                <p>{{orgList.organisationDetail}}</p>
+            </div>
+
+            <ul class="d-flex mb-3 ps-3 " style="list-style: none;">
+                <li routerLink="./event" routerLinkActive="active" class="org-link fs-5 fw-bolder me-3 curs"><i
+                        class="fa fa-calendar fa-sm" aria-hidden="true"></i>&nbsp;Event</li>
+                <li routerLink="./volunteer" routerLinkActive="active" class="org-link fs-5 fw-bolder ms-3 curs"><i
+                        class="fa fa-users fa-sm" aria-hidden="true"></i>&nbsp;Volunteer</li>
+                <button *ngIf="!joined" class="btn btn-success fw-bolder btn-md ms-auto me-3"
+                    (click)="addVolunteer(orgList.organisationDataId)">Join Now&nbsp;<i class="fa fa-plus-circle fa-lg"
+                        aria-hidden="true"></i></button>
+                <button *ngIf="joined" class="btn btn-success fw-bolder btn-md ms-auto me-3"
+                    (click)="addVolunteer(orgList.organisationDataId)">Joined&nbsp;<i class="fa fa-check fa-lg"
+                        aria-hidden="true"></i></button>
+            </ul>
+        </div>
+    </div>
+</div>
+<router-outlet></router-outlet>
